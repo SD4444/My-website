@@ -1,15 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
+import projectLogos from './projectLogos.json';
 
 /* ─── DATA ─── */
+const logoRows = [
+  projectLogos.slice(0, 9),
+  projectLogos.slice(9, 18),
+  projectLogos.slice(18, 27),
+  projectLogos.slice(27),
+];
+
 const deals = [
   {
     title: 'SciSports',
     tagline: 'Strategic Acquisition',
     sector: 'AI & Sports Analytics',
     type: 'M&A Advisory',
-    countries: ['🇳🇱', '🇺🇸'],
     website: 'https://scisports.com',
     description: 'SciSports is a global leader in AI-driven football analytics, delivering real-time, actionable insights into player and team performance. Their solution empowers clubs, federations, agents, and analysts to make data-driven decisions. With a database of over 275,000 players and 180+ teams globally.',
     challenge: 'SciSports had built an impressive product and client base in Europe, but needed to refine its corporate strategy and company narrative to attract strategic buyers and maximize valuation.',
@@ -20,7 +27,6 @@ const deals = [
     tagline: 'Strategic Acquisition',
     sector: 'Mobility & Mapping',
     type: 'M&A Advisory',
-    countries: ['🇳🇱'],
     website: 'https://horus.nu',
     description: 'Horus bridges worlds with adaptive mapping solutions, transforming vehicles into powerful computing hubs that process complex sensor data on-edge. Their modular technology enables seamless integration into existing operations for precision mapping and reality capture.',
     challenge: 'Horus had built industry-leading mapping technology and needed strategic advisory to navigate the acquisition process and find the right buyer to accelerate their growth.',
@@ -31,7 +37,6 @@ const deals = [
     tagline: 'Seed / Acquisition',
     sector: 'AI & Sensor Tech',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://moos.nu',
     description: 'MOOS provides AI-powered shelf sensors that deliver real-time visibility on inventory levels across retail and healthcare. Their technology uses shelf triggers to optimize availability, reduce out-of-stocks, and prevent shrinkage, replacing scheduled checks with intelligent, event-driven operations.',
     challenge: 'MOOS needed growth capital to scale their smart sensor platform and expand across retail and healthcare markets.',
@@ -42,7 +47,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Additive Manufacturing',
     type: 'Fundraising',
-    countries: ['🇦🇹'],
     website: 'https://incus3d.com',
     description: 'Incus develops industrial metal additive manufacturing systems based on Lithography-based Metal Manufacturing (LMM). Their process uses photopolymerization to shape metal powder-filled resins into complex near-net-shape parts, sintered to full density. The technology produces intricate metal components with quality unachievable by traditional MIM or CNC, serving medical devices, aerospace, and precision engineering.',
     challenge: 'Incus needed to secure growth capital to scale production and expand into the US and India.',
@@ -53,7 +57,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Battery Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://sparksolar.io',
     description: 'SPARK builds solar-powered battery systems that store energy during the day for use at night. Their smart batteries automatically manage charging and power supply, with multiple units connecting to create larger solar systems capable of powering appliances like refrigerators and small crop mills in off-grid communities.',
     challenge: 'SPARK needed growth capital to scale their off-grid solar battery technology and expand distribution across emerging markets.',
@@ -64,7 +67,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Digital Technology',
     type: 'Commercial Due Diligence',
-    countries: ['🇵🇹'],
     website: 'https://infraspeak.com/en',
     description: 'Infraspeak is an intelligent maintenance management platform that helps facility and maintenance teams work smarter. Their platform combines IoT, AI, and automation to streamline maintenance operations across buildings, facilities, and infrastructure.',
     challenge: 'Infraspeak was preparing for a Series B round and potential investors requested commercial due diligence to validate their market position, growth potential, and commercial strategy.',
@@ -75,7 +77,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Digital Technology',
     type: 'Commercial Due Diligence',
-    countries: ['🇫🇷'],
     website: 'https://www.fairlymade.com/',
     description: 'Fairly Made is a sustainability platform that helps fashion and textile brands measure, manage, and improve the environmental and social impact of their supply chains. Their technology provides full traceability and lifecycle assessment across the value chain.',
     challenge: 'Fairly Made was raising a Series B and required commercial due diligence to assess market opportunity, competitive landscape, and scalability of their sustainability platform.',
@@ -86,7 +87,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'FinTech',
     type: 'Fundraising',
-    countries: ['🇭🇺'],
     website: 'https://www.barion.com/en/',
     description: 'Barion is a Hungarian fintech company providing smart payment solutions for online and in-store commerce. Their platform offers seamless checkout, payment gateway services, and a digital wallet, serving thousands of merchants across Europe.',
     challenge: 'Barion needed growth capital to scale their payment platform across European markets and expand their product offering.',
@@ -97,7 +97,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://owlin.com/',
     description: 'Owlin is an AI-powered risk intelligence platform that monitors global news and data sources in real-time to help financial institutions, corporates, and governments identify emerging risks and opportunities.',
     challenge: 'Owlin needed growth capital to scale their AI risk intelligence platform and expand their enterprise client base internationally.',
@@ -108,7 +107,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://moreapp.com/',
     description: 'MoreApp digitizes paperwork with smart digital forms, helping field teams and organizations replace paper processes with efficient mobile workflows. Their platform serves thousands of companies across industries.',
     challenge: 'MoreApp needed growth capital to scale their digital forms platform and accelerate international expansion.',
@@ -119,7 +117,6 @@ const deals = [
     tagline: 'Series B',
     sector: 'HRTech',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://maqqie.nl/',
     description: 'Maqqie is a platform that simplifies flexible workforce management, helping companies manage freelancers and contractors with compliant payments, contracts, and administration.',
     challenge: 'Maqqie needed growth capital to scale their workforce platform and expand across the flexible labor market.',
@@ -130,7 +127,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'HVAC Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://blueheartenergy.com',
     description: 'BlueHeart Energy uses powerful sound waves in a pressurized helium environment to create heating and cooling. Their heat pump engine is the first to operate without HFC or flammable refrigerants, with zero direct CO2 emissions, delivering silent operation under 40dB.',
     challenge: 'BlueHeart needed capital for product improvements, cost reduction, and building a clear path to industrialization of their thermoacoustic heat pump technology.',
@@ -141,7 +137,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Photonics',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://inphocal.com',
     description: 'inPhocal, founded in 2019 at High Tech Campus Eindhoven, has developed transformative laser technology based on CERN research. Winners of the CES Innovation Award, Gerard & Anton Award, and Deloitte Fast 50 finalist, they have deployed production line systems marking up to 3,000 unique QR codes per minute.',
     challenge: 'inPhocal needed capital to scale their laser marking technology from early deployment into full commercial production across multiple industries.',
@@ -152,7 +147,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Health & Life Sciences',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://alfarim.com',
     description: 'Alfarim produces actinium-225, the world\'s most sought-after medical isotope, on an industrial scale. Their innovative technology enables controlled large-scale production to meet growing global demand, accelerating targeted alpha therapies as a groundbreaking cure for cancers including prostate cancer, leukaemia, and breast cancer.',
     challenge: 'Alfarim needed growth capital to scale their isotope production technology and meet the surging demand from the radiopharmaceutical industry for actinium-225.',
@@ -163,7 +157,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'FoodTech & AI',
     type: 'Fundraising',
-    countries: ['🇩🇪'],
     website: 'https://precitaste.com',
     description: 'PreciTaste builds AI-powered restaurant software that optimizes kitchen operations. Their platform includes demand forecasting, daily prep management, hourly production planning, predictive ordering, and real-time food tracking, helping restaurant chains reduce waste and improve efficiency at scale.',
     challenge: 'PreciTaste needed capital to scale their AI kitchen platform across major restaurant chains and expand their product suite.',
@@ -174,7 +167,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Biotech',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://recell.eu',
     description: 'Recell elevates discarded cellulosic waste into next-generation advanced resources, creating sustainable value for building materials, green chemicals, and advanced biofuels. Their technology delivers measurable impact while accelerating defossilization with the smallest possible CO₂ footprint.',
     challenge: 'Recell needed growth capital to scale their waste-to-resource technology and serve growing demand for sustainable building materials and green chemicals.',
@@ -185,7 +177,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Robotics',
     type: 'Fundraising',
-    countries: ['🇳🇱', '🇩🇪'],
     website: 'https://solid-3d.com',
     description: 'Solid-3D is a robotics company accelerating the transition to automated warehouses, manufacturing facilities, and construction sites. Their flagship Mark.One Robotic platform combines advanced AI with cloud connectivity for high-precision operations including DM code pasting, stake out operations, floor printing, and floor drilling.',
     challenge: 'Solid-3D needed capital to scale their fleet of high-precision positioning robots and expand across warehouse automation and construction markets.',
@@ -196,7 +187,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇸🇪'],
     website: 'https://telkey.com/en/',
     description: 'Telkey provides smart access solutions for property management, enabling digital key distribution, remote access control, and seamless entry management for residential and commercial properties across Scandinavia.',
     challenge: 'Telkey needed capital to scale their smart access platform and expand beyond the Scandinavian market.',
@@ -207,7 +197,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://easy2audit.com/',
     description: 'Easy2Audit streamlines the audit process with intelligent automation, helping accounting firms and auditors work more efficiently. Their platform reduces manual work and improves audit quality through smart workflows and data analysis.',
     challenge: 'Easy2Audit needed capital to scale their audit automation platform and expand their client base across the accounting industry.',
@@ -218,7 +207,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Travel Tech',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://vialuxury.com/nl-NL',
     description: 'ViaLuxury is a digital platform connecting luxury brands with consumers, offering curated access to premium products and experiences. Their marketplace combines technology with curation to deliver an elevated shopping experience.',
     challenge: 'ViaLuxury needed capital to scale their luxury marketplace platform and expand their brand partnerships.',
@@ -229,7 +217,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Mobility & Sustainability',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://www.dockrmobility.com/en/',
     description: 'DOCKR provides electric last-mile delivery vehicles for urban logistics, offering flexible leasing solutions for businesses transitioning to zero-emission fleets. Their platform combines electric cargo bikes and vans with smart fleet management.',
     challenge: 'DOCKR needed capital to scale their electric fleet and expand their sustainable urban logistics platform across European cities.',
@@ -240,7 +227,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Digital Therapeutics',
     type: 'Fundraising',
-    countries: ['🇩🇪'],
     website: 'https://vitad.io/',
     description: 'Vitadio is a digital therapeutics company offering an AI-powered app for diabetes management. Their clinically validated platform helps patients manage Type 2 diabetes through personalized coaching, nutrition guidance, and behavioral interventions.',
     challenge: 'Vitadio needed capital to scale their digital therapeutics platform and expand clinical validation across European markets.',
@@ -251,7 +237,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'FoodTech',
     type: 'Fundraising',
-    countries: ['🇩🇪'],
     website: 'https://viride.net/en/',
     description: 'Viride develops sustainable energy solutions, working at the intersection of clean technology and industrial decarbonization to help companies reduce their environmental footprint.',
     challenge: 'Viride needed capital to scale their clean energy technology and expand across industrial markets.',
@@ -262,7 +247,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'HealthTech',
     type: 'Fundraising',
-    countries: ['🇩🇪'],
     website: 'https://www.prosoma.com/en',
     description: 'Prosoma develops digital health solutions focused on chronic pain management, combining clinical expertise with technology to deliver evidence-based therapeutic programs for patients.',
     challenge: 'Prosoma needed capital to scale their digital pain management platform and expand their clinical programs.',
@@ -273,7 +257,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Health & Life Sciences',
     type: 'Fundraising',
-    countries: ['🇨🇭'],
     website: 'https://www.perivision.com/',
     description: 'Perivision develops advanced ophthalmic diagnostic technology, providing innovative solutions for eye care professionals to improve patient outcomes through early detection and monitoring.',
     challenge: 'Perivision needed capital to scale their diagnostic technology and expand into the UK and USA.',
@@ -284,7 +267,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Smart Vending',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://junea.nl/',
     description: 'Junea is a smart vending machine company that combines sleek hardware design with intelligent software to bring modern, app-based snack and drink solutions to offices and workspaces across the Netherlands.',
     challenge: 'Junea needed capital to scale their smart vending platform and expand across new locations and markets.',
@@ -295,7 +277,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇧🇪'],
     website: 'https://www.datylon.com/',
     description: 'Datylon provides professional data visualization and chart design tools, enabling organizations to create beautiful, on-brand reports and dashboards at scale through automated chart generation.',
     challenge: 'Datylon needed capital to scale their data visualization platform and expand their enterprise client base.',
@@ -306,7 +287,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'AI-Driven Drug Discovery',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://corelifeanalytics.com/',
     description: 'CoreLife Analytics develops advanced analytics solutions for the life sciences industry, helping pharmaceutical and biotech companies make data-driven decisions across drug development and commercialization.',
     challenge: 'CoreLife Analytics needed capital to scale their analytics platform and expand across the pharmaceutical industry.',
@@ -317,7 +297,6 @@ const deals = [
     tagline: 'Series A',
     sector: 'Advanced Manufacturing',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://am-flow.com/',
     description: 'AM-Flow automates the post-processing workflow in additive manufacturing with AI-powered identification, sorting, and quality control systems. Their technology enables fully automated 3D printing factories.',
     challenge: 'AM-Flow needed capital to scale their automation solutions and expand across the additive manufacturing industry.',
@@ -328,7 +307,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'AgriTech',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://collie.ag',
     description: 'Collie has developed a deep-tech virtual fencing and cow guidance system for sustainable dairy farming. The Collie collar uses gentle techniques to train cows to respond to sounds and vibrations, allowing farmers to monitor, move, and contain cows anywhere using their smartphone.',
     challenge: 'Collie had established a small network of interested investors but struggled to convert interest into firm commitments. They needed to refine their equity story and strengthen investor materials.',
@@ -339,7 +317,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'AgriTech & Robotics',
     type: 'Fundraising',
-    countries: ['🇬🇧'],
     website: 'https://earthrover.farm',
     description: 'Earthrover builds autonomous agricultural robots that use AI and computer vision to perform precision farming tasks, reducing chemical inputs and improving crop yields sustainably.',
     challenge: 'Earthrover needed a full equity story improvement and targeted investor sourcing to fund their next phase, including an improved version of the rover, AI enhancements, and expanded rover functionality such as speed and precision.',
@@ -350,7 +327,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'Digital Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://omrt.tech',
     description: 'OMRT is the platform for parametric real estate development, using advanced computational design to transform how buildings are planned, designed, and developed. Their technology enables data-driven decision-making across the entire real estate development process.',
     challenge: 'OMRT needed growth capital to scale their parametric design platform and expand across the real estate development industry.',
@@ -361,7 +337,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'HVAC Technology',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://tarnoc.nl',
     description: 'Tarnoc, based at YES!Delft on the TU Delft Campus, has developed the Turbine Heat Pump, a patented high-temperature heat pump that serves as a 1-to-1 replacement for gas boilers. The system works without an outdoor unit and connects directly to existing piping and radiators, making homes all-electric in one day.',
     challenge: 'Tarnoc needed capital to bring their patented Turbine Heat Pump technology from development into commercial production and market deployment.',
@@ -372,7 +347,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'Advanced Materials',
     type: 'Fundraising',
-    countries: ['🇩🇪'],
     website: 'https://co2bioclean.com',
     description: 'CO2BioClean turns carbon emissions into natural biopolymers for a fossil-free future. Their patented fermentation process captures industrial CO2 at source and transforms it into fully biodegradable PolyHydroxyAlkanoates (PHA) for use in bioplastics and textiles, addressing both climate change and plastic pollution simultaneously.',
     challenge: 'CO2BioClean needed capital to scale their patented CO2-to-biopolymer fermentation process from pilot to industrial production.',
@@ -383,7 +357,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'Mobility & Aerospace',
     type: 'Fundraising',
-    countries: ['🇸🇪'],
     website: 'https://stilride.com',
     description: 'Stilride (STILFOLD) has reimagined green manufacturing with their patented industrial origami technology. Their approach to folding steel into complex shapes eliminates the need for traditional stamping and welding, dramatically reducing material waste, energy consumption, and production costs.',
     challenge: 'Stilride needed growth capital to scale their revolutionary steel-folding manufacturing technology and expand across automotive and mobility industries.',
@@ -394,7 +367,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'Energy & Sustainability',
     type: 'Fundraising',
-    countries: ['🇳🇱'],
     website: 'https://thekitepower.com/',
     description: 'Kitepower develops airborne wind energy systems that use automated kites to generate clean electricity. Their technology harvests wind at higher altitudes where winds are stronger and more consistent, delivering portable renewable energy.',
     challenge: 'Kitepower needed seed funding to advance their airborne wind energy technology from prototype to commercial deployment.',
@@ -405,7 +377,6 @@ const deals = [
     tagline: 'Seed',
     sector: 'Energy & Sustainability',
     type: 'Fundraising',
-    countries: ['🇳🇴'],
     website: 'https://evert.com/',
     description: 'Evert develops smart energy management solutions, helping businesses and consumers optimize their energy consumption and transition to sustainable energy sources.',
     challenge: 'Evert needed seed funding to develop their energy management platform and establish initial market traction.',
@@ -470,18 +441,8 @@ function Slider({ items, renderItem, onItemClick }: {
         </div>
       </div>
       <div className="slider-nav">
-        <button className="slider-btn" onClick={prev}>←</button>
-        <div className="slider-dots">
-          {[0,1,2,3,4,5,6,7,8].map(i => {
-            const center = 4;
-            const activeIdx = current % 9;
-            const dist = Math.min(Math.abs(i - center), 2);
-            const edgeDist = Math.min(i, 8 - i);
-            const opacity = edgeDist <= 1 ? 0.15 : edgeDist <= 2 ? 0.35 : 0.6;
-            return <div key={i} className={`slider-dot ${i === activeIdx ? 'active' : ''}`} style={{ opacity: i === activeIdx ? 1 : opacity }} />;
-          })}
-        </div>
-        <button className="slider-btn" onClick={next}>→</button>
+        <button className="slider-btn" onClick={prev}><span className="nav-arrow nav-arrow-left">↗</span></button>
+        <button className="slider-btn" onClick={next}><span className="nav-arrow nav-arrow-right">↗</span></button>
       </div>
     </div>
   );
@@ -514,6 +475,23 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
     touchStart.current = null;
     touchStartY.current = null;
   };
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' && onPrev) {
+        e.preventDefault();
+        onPrev();
+      }
+      if (e.key === 'ArrowRight' && onNext) {
+        e.preventDefault();
+        onNext();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onPrev, onNext]);
+
   return (
     <div className="overlay-backdrop" onClick={onClose}>
       {onPrev && (
@@ -521,14 +499,14 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
           width: 44, height: 44, position: 'absolute', left: 'calc(50% - 420px)',
           top: '50%', transform: 'translateY(-50%)', zIndex: 101, fontSize: 18,
           background: 'rgba(26,26,26,0.9)', border: '1px solid #2a2a2a', color: '#a0a0a8'
-        }}>←</button>
+        }}><span className="nav-arrow nav-arrow-left">↗</span></button>
       )}
       {onNext && (
         <button className="overlay-arrow overlay-arrow-right slider-btn" onClick={(e) => { e.stopPropagation(); onNext(); }} style={{
           width: 44, height: 44, position: 'absolute', right: 'calc(50% - 420px)',
           top: '50%', transform: 'translateY(-50%)', zIndex: 101, fontSize: 18,
           background: 'rgba(26,26,26,0.9)', border: '1px solid #2a2a2a', color: '#a0a0a8'
-        }}>→</button>
+        }}><span className="nav-arrow nav-arrow-right">↗</span></button>
       )}
       <div className={`overlay-card${scrollable ? ' scrollable' : ''}`}
         onClick={e => e.stopPropagation()}
@@ -540,17 +518,8 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
         {/* Mobile prev/next buttons */}
         {(onPrev || onNext) && (
           <div className="overlay-mobile-nav" style={{ display: 'none', justifyContent: 'space-between', marginTop: 20 }}>
-            <button className="slider-btn" onClick={onPrev} style={{ width: 40, height: 40, fontSize: 16 }}>←</button>
-            <button className="slider-btn" onClick={onNext} style={{ width: 40, height: 40, fontSize: 16 }}>→</button>
-          </div>
-        )}
-        {total && current !== undefined && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
-            <div className="slider-dots">
-              {Array.from({ length: total }, (_, i) => (
-                <div key={i} className={`slider-dot ${i === current ? 'active' : ''}`} />
-              ))}
-            </div>
+            <button className="slider-btn" onClick={onPrev} style={{ width: 40, height: 40, fontSize: 16 }}><span className="nav-arrow nav-arrow-left">↗</span></button>
+            <button className="slider-btn" onClick={onNext} style={{ width: 40, height: 40, fontSize: 16 }}><span className="nav-arrow nav-arrow-right">↗</span></button>
           </div>
         )}
       </div>
@@ -664,18 +633,17 @@ export default function Home() {
             onItemClick={i => setSelectedDeal(i)}
             renderItem={(deal) => (
               <div style={{ minHeight: 180 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-                  <span className="tag">{deal.type}</span>
-                  <span className="tag">{deal.sector}</span>
-                  <span style={{ fontSize: 15, letterSpacing: 2 }}>{deal.countries?.join(' ')}</span>
-                </div>
                 <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: '-0.01em', color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>{deal.title}</h3>
                 <p style={{ fontSize: 17, color: '#a0a0a8', marginBottom: 12, fontWeight: 500 }}>{deal.tagline}</p>
                 <p style={{ fontSize: 15, color: '#a0a0a8', lineHeight: 1.6 }}>
                   {deal.description.slice(0, 150)}...
                 </p>
                 <div style={{ marginTop: 16, fontSize: 14, fontFamily: 'var(--font-mono)', color: '#a0a0a8', fontWeight: 500 }}>
-                  Read more →
+                  Read more ↗
+                </div>
+                <div style={{ display: 'flex', gap: 8, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span className="tag">{deal.type}</span>
+                  <span className="tag">{deal.sector}</span>
                 </div>
               </div>
             )}
@@ -708,11 +676,52 @@ export default function Home() {
                   {thought.excerpt}
                 </p>
                 <div style={{ marginTop: 16, fontSize: 14, fontFamily: 'var(--font-mono)', color: '#a0a0a8', fontWeight: 500 }}>
-                  Read more →
+                  Read more ↗
                 </div>
               </div>
             )}
           />
+        </div>
+      </div>
+
+      {/* Company logos */}
+      <div className="card logo-cloud">
+        <div className="logo-cloud-grid">
+          {logoRows.map((row, rowIndex) => (
+            <div
+              key={`logo-row-${rowIndex}`}
+              className="logo-cloud-row"
+              style={{ '--logo-count': row.length } as React.CSSProperties}
+            >
+              {row.map(company => (
+                <a
+                  key={`${company.title}-${company.domain}`}
+                  className="logo-cloud-item"
+                  href={`https://${company.domain}`}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={company.title}
+                  title={company.title}
+                >
+                  {company.logo ? (
+                    <img
+                      className="logo-cloud-mark"
+                      data-logo={company.title}
+                      src={company.logo}
+                      alt={company.title}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+                        if (fallback) fallback.style.display = 'inline';
+                      }}
+                    />
+                  ) : null}
+                  <span className="logo-cloud-fallback" style={{ display: company.logo ? undefined : 'inline' }}>{company.title}</span>
+                </a>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -768,7 +777,6 @@ export default function Home() {
           <div style={{ display: 'flex', gap: 8, marginBottom: 16, alignItems: 'center', flexWrap: 'wrap', paddingRight: 40 }}>
             <span className="tag">{deals[selectedDeal].type}</span>
             <span className="tag">{deals[selectedDeal].sector}</span>
-            <span className="tag" style={{ background: 'transparent', border: 'none', fontSize: 17, padding: '4px 4px', letterSpacing: 2 }}>{deals[selectedDeal].countries?.join(' ')}</span>
           </div>
           <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 6, letterSpacing: '-0.02em', color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>
             {deals[selectedDeal].title}
@@ -786,13 +794,13 @@ export default function Home() {
             { label: 'About', text: deals[selectedDeal].description },
             { label: 'The Challenge', text: deals[selectedDeal].challenge },
             { label: 'Outcome', text: deals[selectedDeal].outcome },
-          ].map(section => (
+          ].map((section, index) => (
             <div key={section.label} style={{ marginBottom: 24 }}>
               <h4 style={{
                 fontSize: 13, fontWeight: 500, marginBottom: 8, textTransform: 'uppercase',
                 letterSpacing: '0.06em', color: '#a0a0a8', fontFamily: 'var(--font-mono)'
               }}>{section.label}</h4>
-              <p style={{ fontSize: 17, lineHeight: 1.7, color: '#a0a0a8' }}>{section.text}</p>
+              <p className={`deal-overlay-text ${index === 0 ? 'about' : 'compact'}`} style={{ fontSize: 17, lineHeight: 1.7, color: '#a0a0a8' }}>{section.text}</p>
             </div>
           ))}
         </Overlay>

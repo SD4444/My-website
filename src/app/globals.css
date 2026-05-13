@@ -93,6 +93,20 @@ body.overlay-open {
 }
 .overlay-close:hover { background: #2a2a2a; }
 
+.deal-overlay-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.deal-overlay-text.about {
+  min-height: calc(1.7em * 4);
+  -webkit-line-clamp: 4;
+}
+.deal-overlay-text.compact {
+  min-height: calc(1.7em * 2);
+  -webkit-line-clamp: 2;
+}
+
 /* Slider */
 .slider-container {
   position: relative;
@@ -134,22 +148,16 @@ body.overlay-open {
   transition: all 0.15s;
 }
 .slider-btn:hover { background: #111111; }
-
-.slider-dots {
-  display: flex;
-  gap: 6px;
+.nav-arrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  line-height: 1;
 }
-.slider-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: transparent;
-  border: 1.5px solid #3a3a3a;
-  transition: all 0.2s;
+.nav-arrow-left {
+  transform: rotate(225deg);
 }
-.slider-dot.active {
-  background: #6B4E9B;
-  border-color: #6B4E9B;
+.nav-arrow-right {
+  transform: rotate(45deg);
 }
 
 /* Tags */
@@ -168,6 +176,66 @@ body.overlay-open {
   font-size: 13px;
   color: #6B4E9B;
   letter-spacing: 0.02em;
+}
+
+.logo-cloud {
+  margin-top: 40px;
+  padding: 12px 14px;
+}
+.logo-cloud-grid {
+  display: grid;
+  gap: 12px;
+}
+.logo-cloud-row {
+  display: grid;
+  grid-template-columns: repeat(var(--logo-count), minmax(0, 1fr));
+  column-gap: 14px;
+  align-items: center;
+  justify-items: center;
+}
+.logo-cloud-item {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0a0a8;
+  text-decoration: none;
+}
+.logo-cloud-mark {
+  display: block;
+  max-width: 90px;
+  max-height: 24px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(69%) sepia(7%) saturate(256%) hue-rotate(202deg) brightness(91%) contrast(86%);
+  transition: opacity 0.15s;
+}
+.logo-cloud-mark[data-logo="MOOS"],
+.logo-cloud-mark[data-logo="Fairly Made"],
+.logo-cloud-mark[data-logo="Stilride"] {
+  max-width: 107px;
+  max-height: 31px;
+}
+.logo-cloud-mark[data-logo="Datylon"],
+.logo-cloud-mark[data-logo="Easy2Audit"] {
+  max-width: 44px;
+  max-height: 44px;
+}
+.logo-cloud-mark[data-logo="{Solid}3D"] {
+  max-width: 95px;
+  max-height: 19px;
+}
+.logo-cloud-item:hover .logo-cloud-mark {
+  opacity: 0.82;
+}
+.logo-cloud-fallback {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #a0a0a8;
+  text-align: center;
 }
 
 /* Footer dark section */
@@ -205,9 +273,18 @@ body.overlay-open {
   .overlay-mobile-nav { display: flex !important; }
   .overlay-card { padding: 28px !important; padding-top: 56px !important; }
   .contact-row { flex-direction: column !important; }
-  .slider-dots { display: flex !important; }
   .slider-nav { gap: 24px; padding: 16px 0; }
   .slider-btn { width: 44px !important; height: 44px !important; font-size: 18px !important; border: 1px solid #444 !important; background: #222 !important; }
+  .logo-cloud {
+    padding: 12px;
+  }
+  .logo-cloud-grid {
+    gap: 12px;
+  }
+  .logo-cloud-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
   .footer {
     padding: 28px;
   }
