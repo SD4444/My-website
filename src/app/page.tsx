@@ -684,6 +684,25 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Teaching */}
+      <div className="card" style={{ marginTop: 40, padding: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 20 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Teaching</h2>
+          <span className="section-label">Guest lectures &amp; projects</span>
+        </div>
+        <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
+          I give guest lectures to the various student finance associations at Erasmus University Rotterdam, typically on real deals and how they actually unfold. The aim is to move past textbook framings and into the judgment calls, tradeoffs, and dynamics that shape outcomes in practice.
+        </p>
+        <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 24 }}>
+          Alongside the lectures, I run scoped projects with student teams through Evolute. Each project is built around a hypothetical company I design end-to-end, pushing students to conduct rigorous market research, work through competitive and pricing dynamics, and build toward a pitch deck, capital allocation plan, and valuation. The arc closes with a sell-side simulation, where the team pitches the company back to me.
+        </p>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {['Guest Lectures', 'Student Projects', 'Market Research', 'Financial Modeling', 'Valuation', 'Sell-Side Simulation'].map(tag => (
+            <span key={tag} className="tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+
       {/* Company logos */}
       <div className="card logo-cloud">
         <div className="logo-cloud-grid">
