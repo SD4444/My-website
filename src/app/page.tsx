@@ -7,8 +7,8 @@ import projectLogos from './projectLogos.json';
 const logoRows = [
   projectLogos.slice(0, 9),
   projectLogos.slice(9, 18),
-  projectLogos.slice(18, 27),
-  projectLogos.slice(27),
+  [...projectLogos.slice(18, 27), projectLogos[33]],
+  [...projectLogos.slice(27, 33), ...projectLogos.slice(34)],
 ];
 
 const deals = [
@@ -572,7 +572,9 @@ export default function Home() {
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
             {"This gap between real, tangible progress and something investors can confidently underwrite is what led to the creation of "}
-            <strong style={{ color: '#6B4E9B', fontWeight: 600 }}>Evolute</strong>.
+            <a href="https://evolute.partners" target="_blank" rel="noopener" style={{ color: '#6B4E9B', fontWeight: 600, textDecoration: 'none' }}>
+              <strong style={{ color: '#6B4E9B', fontWeight: 600 }}>Evolute</strong>
+            </a>.
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
             In practice, that has meant working closely with teams to understand and clarify what actually drives value in their business, and making the calls that follow. This includes positioning the company, deciding what to prioritise and what to abandon, grounding that in financial reality, and building an equity story and capital strategy that reflects the opportunity ahead.
