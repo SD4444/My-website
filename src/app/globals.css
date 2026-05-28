@@ -110,12 +110,13 @@ body.overlay-open {
 /* Slider */
 .slider-container {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   flex: 1;
 }
 
 .slider-track {
   display: flex;
+  align-items: flex-start;
   transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
@@ -217,8 +218,8 @@ body.overlay-open {
   max-height: 31px;
 }
 .logo-cloud-mark[data-logo="Fairly Made"] {
-  max-width: 124px;
-  max-height: 40px;
+  max-width: 52px;
+  max-height: 52px;
 }
 .logo-cloud-mark[data-logo="Stilride"] {
   max-width: 122px;
@@ -237,8 +238,8 @@ body.overlay-open {
   max-height: 72px;
 }
 .logo-cloud-mark[data-logo="Easy2Audit"] {
-  max-width: 44px;
-  max-height: 44px;
+  max-width: 40px;
+  max-height: 40px;
 }
 .logo-cloud-mark[data-logo="{Solid}3D"] {
   max-width: 95px;
@@ -272,6 +273,15 @@ body.overlay-open {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .page-shell {
+    padding: 24px 16px !important;
+  }
+  .bio-card {
+    padding: 28px 24px !important;
+  }
+  .contact-card {
+    padding: 28px 24px !important;
+  }
   .bento-top {
     grid-template-columns: 1fr !important;
   }
@@ -290,6 +300,14 @@ body.overlay-open {
   .overlay-mobile-nav { display: flex !important; }
   .overlay-card { padding: 28px !important; padding-top: 56px !important; }
   .contact-row { flex-direction: column !important; }
+  .link-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .link-row a {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
   .slider-nav { gap: 24px; padding: 16px 0; }
   .slider-btn { width: 44px !important; height: 44px !important; font-size: 18px !important; border: 1px solid #444 !important; background: #222 !important; }
   .logo-cloud {

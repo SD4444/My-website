@@ -543,7 +543,7 @@ export default function Home() {
   }, [selectedDeal, selectedThought]);
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 32px' }}>
+    <div className="page-shell" style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 32px' }}>
       {/* Top row: Photo + Bio */}
       <div className="bento-top" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 20, marginBottom: 20 }}>
         {/* Photo card + Name */}
@@ -562,13 +562,13 @@ export default function Home() {
         </div>
 
         {/* Bio card */}
-        <div className="card" style={{ padding: '40px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className="card bio-card" style={{ padding: '40px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
             {"Hi, I'm "}
             <strong style={{ color: '#6B4E9B', fontWeight: 600 }}>Simon Demarmels</strong>.
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            {"Over the past years, I've worked with scale-ups and SMEs on fundraising, M&A, commercial DD's, and various other strategic projects. Over time, my focus has shifted from highly scalable software businesses to science-based and technically complex ones. These are companies built on substantial R&D, long development cycles, and complex commercialization pathways. As a result, translating their progress into something investors can value is not always straightforward."}
+            {"Over the past years, I've worked with scale-ups and SMEs on fundraising, M&A, commercial DD's, and various strategic projects. Over time, my focus has shifted from highly scalable software businesses to science-based and technically complex ones. These are companies built on substantial R&D, long development cycles, and complex commercialisation pathways. Translating their progress into something investors can value is not always straightforward."}
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
             {"This gap between real, tangible progress and something investors can confidently underwrite is what led to the creation of "}
@@ -577,22 +577,22 @@ export default function Home() {
             </a>.
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            In practice, that has meant working closely with teams to understand and clarify what actually drives value in their business, and making the calls that follow. This includes positioning the company, deciding what to prioritise and what to abandon, grounding that in financial reality, and building an equity story and capital strategy that reflects the opportunity ahead.
+            In practice, that has meant working closely with teams to clarify what actually drives value in their business, and making the calls that follow. This includes positioning the company, sharpening go-to-market, deciding what to prioritise and what to abandon, scaling internal operations, grounding that in financial reality, and building an equity story and capital strategy that reflects the opportunity ahead.
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            Building Evolute itself has been a version of the same exercise. Setting strategy, defining market positioning, shaping client engagement, and executing commercially and in projects. Where all outcomes carry direct financial and reputational consequences.
+            Building Evolute itself has been a version of the same exercise. Setting strategy, shaping operations, hiring, and executing commercially and in projects. Where all outcomes carry direct financial and reputational consequences.
           </p>
           <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 24 }}>
             Most of the time, the work is less about applying a predefined playbook and more about structured experimentation, disciplined execution, and exercising judgment under uncertainty. That is where I tend to do my best work.
           </p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-            {['M&A', 'Fundraising', 'Corporate Finance', 'Management Advisory', 'Corporate Strategy', 'Shareholder Alignment', 'Financial Modeling', 'Valuation', 'Capital Strategy', 'Business Model Design', 'KPI Design', 'Scaling Operations'].map(tag => (
+            {['Strategy & Operations', 'GTM Strategy', 'Cross-functional Execution', 'M&A', 'Fundraising', 'Corporate Strategy', 'Capital Strategy', 'Management Advisory', 'Shareholder Alignment', 'Business Model Design', 'KPI Design', 'Scaling Operations'].map(tag => (
               <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
           <div style={{ marginBottom: 16 }}>
             <span className="section-label" style={{ display: 'block', marginBottom: 8 }}>Personal</span>
-            <div style={{ display: 'flex', gap: 20 }}>
+            <div className="link-row" style={{ display: 'flex', gap: 20, flexWrap: 'wrap', rowGap: 12 }}>
               <a href="https://www.linkedin.com/in/simon-demarmels/" target="_blank" rel="noopener"
                 style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
                 LinkedIn ↗
@@ -605,7 +605,7 @@ export default function Home() {
           </div>
           <div>
             <span className="section-label" style={{ display: 'block', marginBottom: 8 }}>Current &amp; previous</span>
-            <div style={{ display: 'flex', gap: 20 }}>
+            <div className="link-row" style={{ display: 'flex', gap: 20, flexWrap: 'wrap', rowGap: 12 }}>
               <a href="https://evolute.partners" target="_blank" rel="noopener"
                 style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
                 evolute.partners ↗
@@ -688,7 +688,7 @@ export default function Home() {
 
       {/* Teaching */}
       <div className="card" style={{ marginTop: 40, padding: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
           <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Teaching</h2>
           <span className="section-label">Guest lectures &amp; projects</span>
         </div>
@@ -747,7 +747,7 @@ export default function Home() {
       </div>
 
       {/* Footer — Contact */}
-      <div className="card" style={{ marginTop: 40, padding: 40 }}>
+      <div className="card contact-card" style={{ marginTop: 40, padding: 40 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
           <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Get in touch</h2>
         </div>
