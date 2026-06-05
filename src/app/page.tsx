@@ -635,7 +635,7 @@ export default function Home() {
         <section className="section" id="projects">
           <div className="kicker">01 · Projects</div>
           <h2>Selected engagements.</h2>
-          <p className="lead">A cross-section of projects — select any for the full story.</p>
+          <p className="lead">A cross-section of projects. Select any for the full story.</p>
           <div className="tabs">
             <div className="tab-btns">
               {projTabs.map(t => (
