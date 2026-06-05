@@ -669,7 +669,7 @@ export default function Home() {
         <section className="section" id="thoughts">
           <div className="kicker">02 · Thoughts</div>
           <h2>Streams of consciousness…</h2>
-          <p className="lead">Notes I write to pressure-test my own thinking — on fundraising, tech, economics, and whatever else won&apos;t leave me alone.</p>
+          <p className="lead">Notes I write to pressure-test my own thinking on fundraising, tech, economics, and whatever else won&apos;t leave me alone.</p>
           <div className="thought-list">
             {thoughts.map((thought, i) => (
               <div key={i} className="card clickable thought" onClick={() => setSelectedThought(i)}>
