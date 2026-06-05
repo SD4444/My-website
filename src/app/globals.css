@@ -74,6 +74,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-head); font-size: 13.5px; letter-spacing: .02em; color: var(--text);
 }
 .mark { width: 9px; height: 9px; border: 1.5px solid var(--accent); transform: rotate(45deg); flex-shrink: 0; }
+.topbar-brand .brand-os { color: var(--text-3); letter-spacing: .06em; }
 .topbar-meta {
   flex: 1; display: flex; align-items: center;
   padding: 0 28px; gap: 24px;

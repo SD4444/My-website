@@ -500,8 +500,15 @@ export default function Home() {
 
   React.useEffect(() => {
     const open = selectedDeal !== null || selectedThought !== null;
-    document.body.classList.toggle('overlay-open', open);
-    return () => document.body.classList.remove('overlay-open');
+    if (!open) return;
+    const scrollY = window.scrollY;
+    document.body.style.top = `-${scrollY}px`;
+    document.body.classList.add('overlay-open');
+    return () => {
+      document.body.classList.remove('overlay-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollY);
+    };
   }, [selectedDeal, selectedThought]);
 
   React.useEffect(() => {
@@ -534,7 +541,7 @@ export default function Home() {
   return (
     <>
       <header className="topbar">
-        <div className="topbar-brand"><span className="mark" /></div>
+        <div className="topbar-brand"><span className="mark" />SD<span className="brand-os">//OS</span></div>
         <div className="topbar-marquee" aria-hidden="true">
           <div className="marquee-track">
             <div className="marquee-group">
@@ -786,7 +793,7 @@ export default function Home() {
           onPrev={() => setSelectedDeal((selectedDeal - 1 + deals.length) % deals.length)}
           onNext={() => setSelectedDeal((selectedDeal + 1) % deals.length)}
         >
-          <div className="tag-row" style={{ marginTop: 0, paddingRight: 40 }}>
+          <div className="tag-row" style={{ marginTop: 0, marginBottom: 20, paddingRight: 40 }}>
             <span className="tag">{deals[selectedDeal].type}</span>
             <span className="tag alt">{deals[selectedDeal].sector}</span>
           </div>
