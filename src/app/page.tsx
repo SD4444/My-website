@@ -501,13 +501,12 @@ export default function Home() {
   React.useEffect(() => {
     const open = selectedDeal !== null || selectedThought !== null;
     if (!open) return;
-    const scrollY = window.scrollY;
-    document.body.style.top = `-${scrollY}px`;
-    document.body.classList.add('overlay-open');
+    const html = document.documentElement;
+    html.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.classList.remove('overlay-open');
-      document.body.style.top = '';
-      window.scrollTo(0, scrollY);
+      html.style.overflow = '';
+      document.body.style.overflow = '';
     };
   }, [selectedDeal, selectedThought]);
 

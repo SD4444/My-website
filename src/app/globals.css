@@ -261,7 +261,8 @@ textarea { min-height: 120px; resize: vertical; }
   z-index: 200; display: flex; align-items: center; justify-content: center;
   animation: fadeIn .2s ease; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
 }
-body.overlay-open { overflow: hidden; position: fixed; width: 100%; }
+/* Scroll lock while an overlay is open is handled in JS (overflow on html+body),
+   so the page never moves — no jump, no flicker. */
 .overlay-card {
   background: var(--bg); border: 1px solid var(--border-md);
   max-width: 720px; width: 90%; max-height: 85vh; overflow-y: auto; overscroll-behavior: contain;
@@ -280,7 +281,7 @@ body.overlay-open { overflow: hidden; position: fixed; width: 100%; }
 .ov-section { margin-bottom: 24px; }
 .ov-h4 { font-family: var(--font-head); font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
 .ov-text { font-size: 14.5px; line-height: 1.75; color: var(--text-2); }
-.ov-thought-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+.ov-thought-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; padding-right: 46px; }
 .ov-medium { font-family: var(--font-head); font-size: 11px; letter-spacing: .04em; color: var(--text-2); border: 1px solid var(--border-md); padding: 5px 11px; white-space: nowrap; }
 .ov-medium:hover { color: var(--text); border-color: var(--border-hi); }
 .ov-body { font-size: 14.5px; line-height: 1.85; color: var(--text-2); white-space: pre-line; }
