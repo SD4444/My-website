@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import projectLogos from './projectLogos.json';
+import AskBot from './AskBot';
 
 /* ─── DATA ─── */
 const logoRows = [
@@ -497,6 +498,7 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const [active, setActive] = useState('about');
   const [progress, setProgress] = useState(4);
+  const [askOpen, setAskOpen] = useState(false);
 
   React.useEffect(() => {
     const open = selectedDeal !== null || selectedThought !== null;
@@ -574,6 +576,10 @@ export default function Home() {
         </nav>
         <div className="sidebar-foot">
           <div className="prog-line"><span style={{ width: `${progress}%` }} /></div>
+          <button className="sidebar-ask" onClick={() => setAskOpen(true)}>
+            <span className="sidebar-ask-dot" />
+            Ask me anything
+          </button>
         </div>
       </aside>
 
@@ -842,6 +848,8 @@ export default function Home() {
           <div className="ov-body">{thoughts[selectedThought].content}</div>
         </Overlay>
       )}
+
+      <AskBot open={askOpen} onClose={() => setAskOpen(false)} />
     </>
   );
 }
