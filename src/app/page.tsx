@@ -419,42 +419,21 @@ const thoughts = [
   },
 ]
 
-/* ─── SLIDER ─── */
-function Slider({ items, renderItem, onItemClick }: {
-  items: any[];
-  renderItem: (item: any, index: number) => React.ReactNode;
-  onItemClick: (index: number) => void;
-}) {
-  const [current, setCurrent] = useState(0);
-  const prev = () => setCurrent(c => (c - 1 + items.length) % items.length);
-  const next = () => setCurrent(c => (c + 1) % items.length);
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div className="slider-container">
-        <div className="slider-track" style={{ transform: `translateX(-${current * 100}%)` }}>
-          {items.map((item, i) => (
-            <div key={i} className="slider-item" onClick={() => onItemClick(i)}>
-              {renderItem(item, i)}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="slider-nav">
-        <button className="slider-btn" onClick={prev}><span className="nav-arrow nav-arrow-left">↗</span></button>
-        <button className="slider-btn" onClick={next}><span className="nav-arrow nav-arrow-right">↗</span></button>
-      </div>
-    </div>
-  );
-}
+/* ─── NAV ─── */
+const NAV = [
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'thoughts', label: 'Thoughts' },
+  { id: 'teaching', label: 'Teaching' },
+  { id: 'clients', label: 'Clients' },
+  { id: 'contact', label: 'Contact' },
+];
 
 /* ─── OVERLAY ─── */
-function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children }: {
+function Overlay({ onClose, onPrev, onNext, scrollable, children }: {
   onClose: () => void;
   onPrev?: () => void;
   onNext?: () => void;
-  current?: number;
-  total?: number;
   scrollable?: boolean;
   children: React.ReactNode;
 }) {
@@ -478,35 +457,25 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft' && onPrev) {
-        e.preventDefault();
-        onPrev();
-      }
-      if (e.key === 'ArrowRight' && onNext) {
-        e.preventDefault();
-        onNext();
-      }
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft' && onPrev) { e.preventDefault(); onPrev(); }
+      if (e.key === 'ArrowRight' && onNext) { e.preventDefault(); onNext(); }
     };
-
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onPrev, onNext]);
+  }, [onPrev, onNext, onClose]);
 
   return (
     <div className="overlay-backdrop" onClick={onClose}>
       {onPrev && (
-        <button className="overlay-arrow overlay-arrow-left slider-btn" onClick={(e) => { e.stopPropagation(); onPrev(); }} style={{
-          width: 44, height: 44, position: 'absolute', left: 'calc(50% - 420px)',
-          top: '50%', transform: 'translateY(-50%)', zIndex: 101, fontSize: 18,
-          background: 'rgba(26,26,26,0.9)', border: '1px solid #2a2a2a', color: '#a0a0a8'
-        }}><span className="nav-arrow nav-arrow-left">↗</span></button>
+        <button className="ov-arrow left" onClick={(e) => { e.stopPropagation(); onPrev(); }}>
+          <span className="nav-arrow nav-arrow-left">↗</span>
+        </button>
       )}
       {onNext && (
-        <button className="overlay-arrow overlay-arrow-right slider-btn" onClick={(e) => { e.stopPropagation(); onNext(); }} style={{
-          width: 44, height: 44, position: 'absolute', right: 'calc(50% - 420px)',
-          top: '50%', transform: 'translateY(-50%)', zIndex: 101, fontSize: 18,
-          background: 'rgba(26,26,26,0.9)', border: '1px solid #2a2a2a', color: '#a0a0a8'
-        }}><span className="nav-arrow nav-arrow-right">↗</span></button>
+        <button className="ov-arrow right" onClick={(e) => { e.stopPropagation(); onNext(); }}>
+          <span className="nav-arrow nav-arrow-right">↗</span>
+        </button>
       )}
       <div className={`overlay-card${scrollable ? ' scrollable' : ''}`}
         onClick={e => e.stopPropagation()}
@@ -515,13 +484,6 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
       >
         <button className="overlay-close" onClick={onClose}>✕</button>
         {children}
-        {/* Mobile prev/next buttons */}
-        {(onPrev || onNext) && (
-          <div className="overlay-mobile-nav" style={{ display: 'none', justifyContent: 'space-between', marginTop: 20 }}>
-            <button className="slider-btn" onClick={onPrev} style={{ width: 40, height: 40, fontSize: 16 }}><span className="nav-arrow nav-arrow-left">↗</span></button>
-            <button className="slider-btn" onClick={onNext} style={{ width: 40, height: 40, fontSize: 16 }}><span className="nav-arrow nav-arrow-right">↗</span></button>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -531,260 +493,291 @@ function Overlay({ onClose, onPrev, onNext, current, total, scrollable, children
 export default function Home() {
   const [selectedDeal, setSelectedDeal] = useState<number | null>(null);
   const [selectedThought, setSelectedThought] = useState<number | null>(null);
+  const [projTab, setProjTab] = useState<'All' | 'Fundraising' | 'M&A' | 'Due Diligence'>('All');
+  const [navOpen, setNavOpen] = useState(false);
+  const [active, setActive] = useState('about');
+  const [progress, setProgress] = useState(4);
 
   React.useEffect(() => {
     const open = selectedDeal !== null || selectedThought !== null;
-    if (open) {
-      document.body.classList.add('overlay-open');
-    } else {
-      document.body.classList.remove('overlay-open');
-    }
+    document.body.classList.toggle('overlay-open', open);
     return () => document.body.classList.remove('overlay-open');
   }, [selectedDeal, selectedThought]);
 
+  React.useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY + 130;
+      let current = NAV[0].id;
+      for (const n of NAV) {
+        const el = document.getElementById(n.id);
+        if (el && el.offsetTop <= y) current = n.id;
+      }
+      setActive(current);
+      const h = document.documentElement;
+      const p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      setProgress(Math.max(4, Math.min(100, Number.isFinite(p) ? p : 4)));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const projTabs: Array<'All' | 'Fundraising' | 'M&A' | 'Due Diligence'> = ['All', 'Fundraising', 'M&A', 'Due Diligence'];
+  const matchTab = (d: typeof deals[number]) =>
+    projTab === 'All' ? true
+      : projTab === 'Fundraising' ? d.type === 'Fundraising'
+      : projTab === 'M&A' ? d.type === 'M&A Advisory'
+      : d.type.includes('Due Diligence');
+
+  const marqueeLogos = (projectLogos as Array<{ title: string; logo?: string; domain: string }>).filter(c => c.logo);
+
   return (
-    <div className="page-shell" style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 32px' }}>
-      {/* Top row: Photo + Bio */}
-      <div className="bento-top" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 20, marginBottom: 20 }}>
-        {/* Photo card + Name */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div className="card" style={{
-            height: 360,
-            background: '#111111',
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
-            <img src="/simon.png" alt="Simon Demarmels" style={{
-              width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top',
-              filter: 'grayscale(100%)',
-            }} />
+    <>
+      <header className="topbar">
+        <div className="topbar-brand"><span className="mark" /></div>
+        <div className="topbar-marquee" aria-hidden="true">
+          <div className="marquee-track">
+            <div className="marquee-group">
+              {marqueeLogos.map(c => (
+                <img key={`mq-a-${c.title}`} className="marquee-logo" data-logo={c.title} src={c.logo} alt="" title={c.title} loading="lazy" />
+              ))}
+            </div>
+            <div className="marquee-group">
+              {marqueeLogos.map(c => (
+                <img key={`mq-b-${c.title}`} className="marquee-logo" data-logo={c.title} src={c.logo} alt="" title={c.title} loading="lazy" />
+              ))}
+            </div>
           </div>
         </div>
+        <button className="nav-toggle" aria-label="Toggle navigation" onClick={() => setNavOpen(o => !o)}>
+          <span className="nav-toggle-bar" />
+        </button>
+      </header>
 
-        {/* Bio card */}
-        <div className="card bio-card" style={{ padding: '40px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            {"Hi, I'm "}
-            <strong style={{ color: '#6B4E9B', fontWeight: 600 }}>Simon Demarmels</strong>.
-          </p>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            {"Over the past years, I've worked with scale-ups and SMEs on fundraising, M&A, commercial DD's, and various strategic projects. Over time, my focus has shifted from highly scalable software businesses to science-based and technically complex ones. These are companies built on substantial R&D, long development cycles, and complex commercialisation pathways. Translating their progress into something investors can value is not always straightforward."}
-          </p>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            {"This gap between real, tangible progress and something investors can confidently underwrite is what led to the creation of "}
-            <a href="https://evolute.partners" target="_blank" rel="noopener" style={{ color: '#6B4E9B', fontWeight: 600, textDecoration: 'none' }}>
-              <strong style={{ color: '#6B4E9B', fontWeight: 600 }}>Evolute</strong>
-            </a>.
-          </p>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            In practice, that has meant working closely with teams to clarify what actually drives value in their business, and making the calls that follow. This includes positioning the company, sharpening go-to-market, deciding what to prioritise and what to abandon, scaling internal operations, grounding that in financial reality, and building an equity story and capital strategy that reflects the opportunity ahead.
-          </p>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-            Building Evolute itself has been a version of the same exercise. Setting strategy, shaping operations, hiring, and executing commercially and in projects. Where all outcomes carry direct financial and reputational consequences.
-          </p>
-          <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 24 }}>
-            Most of the time, the work is less about applying a predefined playbook and more about structured experimentation, disciplined execution, and exercising judgment under uncertainty. That is where I tend to do my best work.
-          </p>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
+      <aside className={`sidebar${navOpen ? ' open' : ''}`}>
+        <div className="sidebar-head">
+          <div className="sidebar-title">Simon Demarmels<small>Builder, tech enthusiast, capital-markets romantic</small></div>
+        </div>
+        <nav>
+          {NAV.map((n, i) => (
+            <a key={n.id} href={`#${n.id}`} className={active === n.id ? 'active' : ''} onClick={() => setNavOpen(false)}>
+              <span className="nr">{String(i).padStart(2, '0')}</span>
+              <span>{n.label}</span>
+            </a>
+          ))}
+        </nav>
+        <div className="sidebar-foot">
+          <div className="prog-line"><span style={{ width: `${progress}%` }} /></div>
+        </div>
+      </aside>
+
+      <main>
+        {/* 00 — ABOUT */}
+        <section className="section" id="about">
+          <div className="kicker">00 · About</div>
+          <div className="about-grid">
+            <div className="photo-panel">
+              <img src="/simon.png" alt="Simon Demarmels" />
+            </div>
+            <div>
+              <p className="lead">
+                {"Over the past years, I've worked with scale-ups and SMEs on fundraising, M&A, commercial DD's, and various strategic projects. Over time, my focus has shifted from highly scalable software businesses to science-based and technically complex ones. These are companies built on substantial R&D, long development cycles, and complex commercialisation pathways. Translating their progress into something investors can value is not always straightforward."}
+              </p>
+              <p>
+                {"This gap between real, tangible progress and something investors can confidently underwrite is what led to the creation of "}
+                <a className="inline" href="https://evolute.partners" target="_blank" rel="noopener">Evolute</a>.
+              </p>
+              <p>
+                In practice, that has meant working closely with teams to clarify what actually drives value in their business, and making the calls that follow. This includes positioning the company, sharpening go-to-market, deciding what to prioritise and what to abandon, scaling internal operations, grounding that in financial reality, and building an equity story and capital strategy that reflects the opportunity ahead.
+              </p>
+              <p>
+                Building Evolute itself has been a version of the same exercise. Setting strategy, shaping operations, hiring, and executing commercially and in projects. Where all outcomes carry direct financial and reputational consequences.
+              </p>
+              <p>
+                Most of the time, the work is less about applying a predefined playbook and more about structured experimentation, disciplined execution, and exercising judgment under uncertainty. That is where I tend to do my best work.
+              </p>
+            </div>
+          </div>
+
+          <div className="kpi-row">
+            <div className="kpi"><div className="kpi-val">{'>60'}</div><div className="kpi-lbl">Engagements across fundraising, M&amp;A, investor relations, and strategic finance projects.</div></div>
+            <div className="kpi"><div className="kpi-val">Seed–M&amp;A</div><div className="kpi-lbl">From first institutional round to exit.</div></div>
+            <div className="kpi"><div className="kpi-val">Deep-tech</div><div className="kpi-lbl">Science-based and technically complex businesses.</div></div>
+            <div className="kpi"><div className="kpi-val">20+</div><div className="kpi-lbl">Sectors, from photonics and robotics to fintech and biotech.</div></div>
+          </div>
+
+          <div className="tag-row">
             {['Strategy & Operations', 'GTM Strategy', 'Cross-functional Execution', 'M&A', 'Fundraising', 'Corporate Strategy', 'Capital Strategy', 'Management Advisory', 'Shareholder Alignment', 'Business Model Design', 'KPI Design', 'Scaling Operations'].map(tag => (
               <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
-          <div style={{ marginBottom: 16 }}>
-            <span className="section-label" style={{ display: 'block', marginBottom: 8 }}>Personal</span>
-            <div className="link-row" style={{ display: 'flex', gap: 20, flexWrap: 'wrap', rowGap: 12 }}>
-              <a href="https://www.linkedin.com/in/simon-demarmels/" target="_blank" rel="noopener"
-                style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
-                LinkedIn ↗
-              </a>
-              <a href="https://medium.com/@simon.demarmels" target="_blank" rel="noopener"
-                style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
-                Medium ↗
-              </a>
-            </div>
-          </div>
-          <div>
-            <span className="section-label" style={{ display: 'block', marginBottom: 8 }}>Current &amp; previous</span>
-            <div className="link-row" style={{ display: 'flex', gap: 20, flexWrap: 'wrap', rowGap: 12 }}>
-              <a href="https://evolute.partners" target="_blank" rel="noopener"
-                style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
-                evolute.partners ↗
-              </a>
-              <a href="https://rocketx.group/" target="_blank" rel="noopener"
-                style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
-                rocketx.group ↗
-              </a>
-              <a href="https://ibsca.nl/en/" target="_blank" rel="noopener"
-                style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F' }}>
-                ibsca.nl ↗
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Bottom row: Deals + Thoughts */}
-      <div className="bento-bottom" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-        {/* Deals */}
-        <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ padding: '24px 24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-            <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Projects</h2>
-          </div>
-          <Slider
-            items={deals}
-            onItemClick={i => setSelectedDeal(i)}
-            renderItem={(deal) => (
-              <div style={{ minHeight: 180 }}>
-                <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: '-0.01em', color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>{deal.title}</h3>
-                <p style={{ fontSize: 17, color: '#a0a0a8', marginBottom: 12, fontWeight: 500 }}>{deal.tagline}</p>
-                <p style={{ fontSize: 15, color: '#a0a0a8', lineHeight: 1.6 }}>
-                  {deal.description.slice(0, 150)}...
-                </p>
-                <div style={{ marginTop: 16, fontSize: 14, fontFamily: 'var(--font-mono)', color: '#a0a0a8', fontWeight: 500 }}>
-                  Read more ↗
-                </div>
-                <div style={{ display: 'flex', gap: 8, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
-                  <span className="tag">{deal.type}</span>
-                  <span className="tag">{deal.sector}</span>
-                </div>
+          <div className="links-block">
+            <div>
+              <span className="section-label">Personal</span>
+              <div className="link-row">
+                <a href="https://www.linkedin.com/in/simon-demarmels/" target="_blank" rel="noopener">LinkedIn ↗</a>
+                <a href="https://medium.com/@simon.demarmels" target="_blank" rel="noopener">Medium ↗</a>
               </div>
-            )}
-          />
-        </div>
-
-        {/* Thoughts */}
-        <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ padding: '24px 24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-            <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Thoughts</h2>
+            </div>
+            <div>
+              <span className="section-label">Current &amp; previous</span>
+              <div className="link-row">
+                <a href="https://evolute.partners" target="_blank" rel="noopener">evolute.partners ↗</a>
+                <a href="https://rocketx.group/" target="_blank" rel="noopener">rocketx.group ↗</a>
+                <a href="https://ibsca.nl/en/" target="_blank" rel="noopener">ibsca.nl ↗</a>
+              </div>
+            </div>
           </div>
-          <Slider
-            items={thoughts}
-            onItemClick={i => setSelectedThought(i)}
-            renderItem={(thought) => (
-              <div style={{ minHeight: 180 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
+        </section>
+
+        {/* 01 — PROJECTS */}
+        <section className="section" id="projects">
+          <div className="kicker">01 · Projects</div>
+          <h2>Selected engagements.</h2>
+          <p className="lead">A cross-section of projects — select any for the full story.</p>
+          <div className="tabs">
+            <div className="tab-btns">
+              {projTabs.map(t => (
+                <button key={t} className={projTab === t ? 'active' : ''} onClick={() => setProjTab(t)}>{t}</button>
+              ))}
+            </div>
+          </div>
+          <div className="proj-grid">
+            {deals.map((deal, i) => ({ deal, i })).filter(({ deal }) => matchTab(deal)).map(({ deal, i }) => (
+              <div key={i} className="card clickable" onClick={() => setSelectedDeal(i)}>
+                <div className="card-name">{deal.title}</div>
+                <div className="card-role">{deal.tagline}</div>
+                <p className="card-desc">{deal.description.slice(0, 116)}…</p>
+                <div className="tag-row">
+                  <span className="tag">{deal.type}</span>
+                  <span className="tag alt">{deal.sector}</span>
+                </div>
+                <div className="read-more">Read more ↗</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 02 — THOUGHTS */}
+        <section className="section" id="thoughts">
+          <div className="kicker">02 · Thoughts</div>
+          <h2>Streams of consciousness…</h2>
+          <p className="lead">Notes I write to pressure-test my own thinking — on fundraising, tech, economics, and whatever else won&apos;t leave me alone.</p>
+          <div className="thought-list">
+            {thoughts.map((thought, i) => (
+              <div key={i} className="card clickable thought" onClick={() => setSelectedThought(i)}>
+                <div className="thought-meta">
                   <span className="section-label">{thought.date}</span>
                   {thought.readTime && (
                     <>
-                      <span style={{ color: '#2A3A4A' }}>·</span>
+                      <span className="dot">·</span>
                       <span className="section-label">{thought.readTime}</span>
                     </>
                   )}
                 </div>
-                <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 10, letterSpacing: '-0.01em', lineHeight: 1.3, color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>
-                  {thought.title}
-                </h3>
-                <p style={{ fontSize: 15, color: '#a0a0a8', lineHeight: 1.6 }}>
-                  {thought.excerpt}
-                </p>
-                <div style={{ marginTop: 16, fontSize: 14, fontFamily: 'var(--font-mono)', color: '#a0a0a8', fontWeight: 500 }}>
-                  Read more ↗
-                </div>
+                <h3 className="card-name">{thought.title}</h3>
+                <p className="card-desc">{thought.excerpt}</p>
+                <div className="read-more">Read more ↗</div>
               </div>
-            )}
-          />
-        </div>
-      </div>
+            ))}
+          </div>
+        </section>
 
-      {/* Teaching */}
-      <div className="card" style={{ marginTop: 40, padding: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Teaching</h2>
-          <span className="section-label">Guest lectures &amp; projects</span>
-        </div>
-        <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 16 }}>
-          I give guest lectures to the various student finance associations at Erasmus University Rotterdam, typically on real deals and how they actually unfold. The aim is to move past textbook framings and into the judgment calls, tradeoffs, and dynamics that shape outcomes in practice.
-        </p>
-        <p style={{ fontSize: 17, color: '#a0a0a8', lineHeight: 1.7, marginBottom: 24 }}>
-          Alongside the lectures, I run scoped projects with student teams through Evolute. Each project is built around a hypothetical company I design end-to-end, pushing students to conduct rigorous market research, work through competitive and pricing dynamics, and build toward a pitch deck, capital allocation plan, and valuation. The arc closes with a sell-side simulation, where the team pitches the company back to me.
-        </p>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {['Guest Lectures', 'Student Projects', 'Market Research', 'Financial Modeling', 'Valuation', 'Sell-Side Simulation'].map(tag => (
-            <span key={tag} className="tag">{tag}</span>
-          ))}
-        </div>
-      </div>
+        {/* 03 — TEACHING */}
+        <section className="section" id="teaching">
+          <div className="kicker">03 · Teaching</div>
+          <h2>Guest lectures &amp; student projects.</h2>
+          <p className="lead">
+            I give guest lectures to the various student finance associations at Erasmus University Rotterdam, typically on real deals and how they actually unfold. The aim is to move past textbook framings and into the judgment calls, tradeoffs, and dynamics that shape outcomes in practice.
+          </p>
+          <p>
+            Alongside the lectures, I run scoped projects with student teams through Evolute. Each project is built around a hypothetical company I design end-to-end, pushing students to conduct rigorous market research, work through competitive and pricing dynamics, and build toward a pitch deck, capital allocation plan, and valuation. The arc closes with a sell-side simulation, where the team pitches the company back to me.
+          </p>
+          <div className="tag-row">
+            {['Guest Lectures', 'Student Projects', 'Market Research', 'Financial Modeling', 'Valuation', 'Sell-Side Simulation'].map(tag => (
+              <span key={tag} className="tag">{tag}</span>
+            ))}
+          </div>
+        </section>
 
-      {/* Company logos */}
-      <div className="card logo-cloud">
-        <div className="logo-cloud-grid">
-          {logoRows.map((row, rowIndex) => (
-            <div
-              key={`logo-row-${rowIndex}`}
-              className="logo-cloud-row"
-              style={{ '--logo-count': row.length } as React.CSSProperties}
-            >
-              {row.map(company => (
-                <a
-                  key={`${company.title}-${company.domain}`}
-                  className="logo-cloud-item"
-                  href={`https://${company.domain}`}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={company.title}
-                  title={company.title}
-                >
-                  {company.logo ? (
-                    <img
-                      className="logo-cloud-mark"
-                      data-logo={company.title}
-                      src={company.logo}
-                      alt={company.title}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
-                        if (fallback) fallback.style.display = 'inline';
-                      }}
-                    />
-                  ) : null}
-                  <span className="logo-cloud-fallback" style={{ display: company.logo ? undefined : 'inline' }}>{company.title}</span>
-                </a>
-              ))}
+        {/* 04 — CLIENTS */}
+        <section className="section" id="clients">
+          <div className="kicker">04 · Clients</div>
+          <h2>Some client logos…for good measure.</h2>
+          <div className="logo-cloud-grid">
+            {logoRows.map((row, rowIndex) => (
+              <div
+                key={`logo-row-${rowIndex}`}
+                className="logo-cloud-row"
+                style={{ '--logo-count': row.length } as React.CSSProperties}
+              >
+                {row.map(company => (
+                  <a
+                    key={`${company.title}-${company.domain}`}
+                    className="logo-cloud-item"
+                    href={`https://${company.domain}`}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={company.title}
+                    title={company.title}
+                  >
+                    {company.logo ? (
+                      <img
+                        className="logo-cloud-mark"
+                        data-logo={company.title}
+                        src={company.logo}
+                        alt={company.title}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+                          if (fallback) fallback.style.display = 'inline';
+                        }}
+                      />
+                    ) : null}
+                    <span className="logo-cloud-fallback" style={{ display: company.logo ? undefined : 'inline' }}>{company.title}</span>
+                  </a>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 05 — CONTACT */}
+        <section className="section" id="contact">
+          <div className="kicker">05 · Contact</div>
+          <h2>Get in touch.</h2>
+          <p className="lead">For fundraising, M&amp;A, strategic finance projects, a guest lecture, or just a good ole chat.</p>
+          <form className="contact-form" onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.target as HTMLFormElement;
+            const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+            const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+            const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+            window.location.href = `mailto:simon.demarmels@gmail.com?subject=Website inquiry from ${name}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+          }}>
+            <div className="row2">
+              <input name="name" placeholder="Your name" required />
+              <input name="email" type="email" placeholder="Your email" required />
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Footer — Contact */}
-      <div className="card contact-card" style={{ marginTop: 40, padding: 40 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e8e8ed' }}>Get in touch</h2>
-        </div>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          const form = e.target as HTMLFormElement;
-          const name = (form.elements.namedItem('name') as HTMLInputElement).value;
-          const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-          const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
-          window.location.href = `mailto:simon.demarmels@gmail.com?subject=Website inquiry from ${name}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-        }} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div className="contact-row" style={{ display: 'flex', gap: 16 }}>
-            <input name="name" placeholder="Your name" required style={{
-              flex: 1, padding: '12px 16px', borderRadius: 12, border: '1px solid #2a2a2a',
-              background: '#111111', color: '#a0a0a8', fontSize: 15, fontFamily: 'var(--font-body)',
-              outline: 'none',
-            }} />
-            <input name="email" type="email" placeholder="Your email" required style={{
-              flex: 1, padding: '12px 16px', borderRadius: 12, border: '1px solid #2a2a2a',
-              background: '#111111', color: '#a0a0a8', fontSize: 15, fontFamily: 'var(--font-body)',
-              outline: 'none',
-            }} />
+            <textarea name="message" placeholder="Write your message…" rows={5} required />
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button className="btn" type="submit">Send ↗</button>
+            </div>
+          </form>
+          <div className="links-block">
+            <div>
+              <span className="section-label">Elsewhere</span>
+              <div className="link-row">
+                <a href="https://www.linkedin.com/in/simon-demarmels/" target="_blank" rel="noopener">LinkedIn ↗</a>
+                <a href="https://medium.com/@simon.demarmels" target="_blank" rel="noopener">Medium ↗</a>
+                <a href="https://evolute.partners" target="_blank" rel="noopener">evolute.partners ↗</a>
+              </div>
+            </div>
           </div>
-          <textarea name="message" placeholder="Write your message..." rows={5} required style={{
-            width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #2a2a2a',
-            background: '#111111', color: '#a0a0a8', fontSize: 15, fontFamily: 'var(--font-body)',
-            outline: 'none', resize: 'vertical', minHeight: 120,
-          }} />
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <button type="submit" style={{
-              padding: '10px 28px', borderRadius: 12, border: 'none',
-              background: '#FFFFFF', color: '#111111', fontSize: 15, fontWeight: 600,
-              cursor: 'pointer', fontFamily: 'var(--font-body)',
-            }}>Send ↗</button>
-          </div>
-        </form>
-      </div>
+        </section>
+      </main>
 
       {/* Deal Overlay */}
       {selectedDeal !== null && (
@@ -792,22 +785,15 @@ export default function Home() {
           onClose={() => setSelectedDeal(null)}
           onPrev={() => setSelectedDeal((selectedDeal - 1 + deals.length) % deals.length)}
           onNext={() => setSelectedDeal((selectedDeal + 1) % deals.length)}
-          current={selectedDeal}
-          total={deals.length}
         >
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16, alignItems: 'center', flexWrap: 'wrap', paddingRight: 40 }}>
+          <div className="tag-row" style={{ marginTop: 0, paddingRight: 40 }}>
             <span className="tag">{deals[selectedDeal].type}</span>
-            <span className="tag">{deals[selectedDeal].sector}</span>
+            <span className="tag alt">{deals[selectedDeal].sector}</span>
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 6, letterSpacing: '-0.02em', color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>
-            {deals[selectedDeal].title}
-          </h2>
-          <p style={{ fontSize: 16, color: '#a0a0a8', marginBottom: 12, fontWeight: 500 }}>
-            {deals[selectedDeal].tagline}
-          </p>
+          <h2 className="ov-title">{deals[selectedDeal].title}</h2>
+          <p className="ov-tagline">{deals[selectedDeal].tagline}</p>
           {deals[selectedDeal].website && (
-            <a href={deals[selectedDeal].website} target="_blank" rel="noopener"
-              style={{ fontSize: 15, color: '#a0a0a8', fontWeight: 500, textDecoration: 'none', borderBottom: '1px solid #2E3E4F', marginBottom: 28, display: 'inline-block' }}>
+            <a className="ov-link" href={deals[selectedDeal].website} target="_blank" rel="noopener">
               {deals[selectedDeal].website!.replace('https://', '')} ↗
             </a>
           )}
@@ -815,13 +801,10 @@ export default function Home() {
             { label: 'About', text: deals[selectedDeal].description },
             { label: 'The Challenge', text: deals[selectedDeal].challenge },
             { label: 'Outcome', text: deals[selectedDeal].outcome },
-          ].map((section, index) => (
-            <div key={section.label} style={{ marginBottom: 24 }}>
-              <h4 style={{
-                fontSize: 13, fontWeight: 500, marginBottom: 8, textTransform: 'uppercase',
-                letterSpacing: '0.06em', color: '#a0a0a8', fontFamily: 'var(--font-mono)'
-              }}>{section.label}</h4>
-              <p className={`deal-overlay-text ${index === 0 ? 'about' : 'compact'}`} style={{ fontSize: 17, lineHeight: 1.7, color: '#a0a0a8' }}>{section.text}</p>
+          ].map((section) => (
+            <div key={section.label} className="ov-section">
+              <h4 className="ov-h4">{section.label}</h4>
+              <p className="ov-text">{section.text}</p>
             </div>
           ))}
         </Overlay>
@@ -833,39 +816,26 @@ export default function Home() {
           onClose={() => setSelectedThought(null)}
           onPrev={() => setSelectedThought((selectedThought - 1 + thoughts.length) % thoughts.length)}
           onNext={() => setSelectedThought((selectedThought + 1) % thoughts.length)}
-          current={selectedThought}
-          total={thoughts.length}
           scrollable
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div className="ov-thought-head">
+            <div className="thought-meta">
               <span className="section-label">{thoughts[selectedThought].date}</span>
               {thoughts[selectedThought].readTime && (
                 <>
-                  <span style={{ color: '#2A3A4A' }}>·</span>
+                  <span className="dot">·</span>
                   <span className="section-label">{thoughts[selectedThought].readTime}</span>
                 </>
               )}
             </div>
             {thoughts[selectedThought].link && (
-              <a href={thoughts[selectedThought].link} target="_blank" rel="noopener"
-                style={{
-                  fontSize: 13, fontWeight: 500, color: '#a0a0a8', textDecoration: 'none',
-                  fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 8,
-                  border: '1px solid var(--border)', whiteSpace: 'nowrap'
-                }}>
-                Medium ↗
-              </a>
+              <a className="ov-medium" href={thoughts[selectedThought].link} target="_blank" rel="noopener">Medium ↗</a>
             )}
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24, letterSpacing: '-0.02em', lineHeight: 1.3, color: '#e8e8ed', fontFamily: 'var(--font-mono)' }}>
-            {thoughts[selectedThought].title}
-          </h2>
-          <div style={{ fontSize: 17, lineHeight: 1.8, color: '#a0a0a8', whiteSpace: 'pre-line' }}>
-            {thoughts[selectedThought].content}
-          </div>
+          <h2 className="ov-title" style={{ marginBottom: 24, lineHeight: 1.25 }}>{thoughts[selectedThought].title}</h2>
+          <div className="ov-body">{thoughts[selectedThought].content}</div>
         </Overlay>
       )}
-    </div>
+    </>
   );
 }
