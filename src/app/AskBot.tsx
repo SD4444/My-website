@@ -11,24 +11,8 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
-  const [panelTop, setPanelTop] = useState<number | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Anchor the panel just below the last nav link ("Contact"), with breathing
-  // room, so it tucks under the navigation instead of covering it.
-  useEffect(() => {
-    if (!open) return;
-    const measure = () => {
-      if (window.innerWidth <= 720) { setPanelTop(null); return; }
-      const links = document.querySelectorAll('.sidebar nav a');
-      const last = links[links.length - 1] as HTMLElement | undefined;
-      setPanelTop(last ? Math.round(last.getBoundingClientRect().bottom + 22) : null);
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [open]);
 
   useEffect(() => {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
@@ -92,12 +76,9 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
   if (!open) return null;
 
   return (
-    <div
-      className="askbot-panel"
-      role="dialog"
-      aria-label="Site assistant"
-      style={panelTop != null ? ({ ['--askbot-top']: `${panelTop}px` } as React.CSSProperties) : undefined}
-    >
+    <>
+      <div className="askbot-backdrop" onClick={onClose} aria-hidden="true" />
+      <div className="askbot-panel" role="dialog" aria-label="Site assistant">
       <div className="askbot-head">
         <span className="askbot-dot" />
         <span>Ask me anything</span>
@@ -137,8 +118,9 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
         />
         <button className="askbot-send" type="submit" disabled={busy || !input.trim()}>↗</button>
       </form>
-      <div className="askbot-foot">Disclaimer: may contain undertones of sarcasm, dry humour, or bad economist jokes.</div>
-    </div>
+        <div className="askbot-foot">Disclaimer: may contain undertones of sarcasm, dry humour, or bad economist jokes.</div>
+      </div>
+    </>
   );
 }
 
