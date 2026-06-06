@@ -4,9 +4,9 @@ import { PERSONA, SITE_CONTENT } from '../../botContent';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 
-// Model: claude-haiku-4-5 — fast and cost-effective for public site Q&A.
-// Swap to 'claude-opus-4-8' for higher-quality (but ~5x pricier) answers.
-const MODEL = 'claude-haiku-4-5';
+// Model: claude-sonnet-4-6 — sharper answers and tighter voice for a public bot.
+// Swap to 'claude-haiku-4-5' to cut cost ~3x if traffic ever gets heavy.
+const MODEL = 'claude-sonnet-4-6';
 const MAX_OUTPUT_TOKENS = 1024;
 
 // ----- input limits -----
