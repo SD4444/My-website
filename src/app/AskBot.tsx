@@ -58,7 +58,17 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
         body: JSON.stringify({ messages: next }),
       });
       if (!res.ok || !res.body) {
-        const msg = res.status === 429 ? 'Too many messages — give it a minute.' : 'Something went wrong. Try again.';
+        let msg = 'Hmm, something broke on my end. Try again in a moment.';
+        if (res.status === 429) {
+          msg = 'Easy now, too many questions at once. Give it a minute.';
+        } else {
+          try {
+            const t = (await res.text()).trim();
+            if (t) msg = t;
+          } catch {
+            /* keep the generic message */
+          }
+        }
         setMessages((m) => updateLast(m, msg));
         return;
       }
