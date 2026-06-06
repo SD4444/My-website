@@ -87,7 +87,9 @@ export async function POST(req: Request) {
       try {
         for await (const event of stream) {
           if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
-            controller.enqueue(encoder.encode(event.delta.text));
+            // Simon hates em dashes — strip them even if the model slips one in.
+            const clean = event.delta.text.replace(/\s*—\s*/g, ', ');
+            controller.enqueue(encoder.encode(clean));
           }
         }
       } catch (err) {
