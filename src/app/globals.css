@@ -310,8 +310,12 @@ textarea { min-height: 120px; resize: vertical; }
   cursor: pointer; transition: background .12s, color .12s;
 }
 .sidebar-ask:hover { background: var(--accent); color: #0A1016; }
-.sidebar-ask-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; animation: askbotDot 2.4s ease-in-out infinite; }
-@keyframes askbotDot { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+.sidebar-ask-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; animation: askbotDot 2s ease-in-out infinite; }
+@keyframes askbotDot {
+  0%   { opacity: 1;   box-shadow: 0 0 0 0 rgba(200,196,232,.45); }
+  50%  { opacity: .25; box-shadow: 0 0 0 6px rgba(200,196,232,0); }
+  100% { opacity: 1;   box-shadow: 0 0 0 0 rgba(200,196,232,0); }
+}
 .askbot-backdrop {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(8,12,18,.5); backdrop-filter: blur(2px);
