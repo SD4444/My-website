@@ -45,7 +45,7 @@ Simon gives guest lectures to the student finance associations at Erasmus Univer
 // One line per engagement: Title — tagline · type · sector. Description. Outcome.
 const PROJECTS = `PROJECTS (selected engagements)
 - SciSports — Strategic Acquisition · M&A Advisory · AI & Sports Analytics. Global leader in AI-driven football analytics (275,000+ players, 180+ teams). Needed to refine corporate strategy and narrative to attract strategic buyers. Outcome: facilitated acquisition by VANAD Group.
-- Horus — Strategic Acquisition · M&A Advisory · Mobility & Mapping. Adaptive mapping that turns vehicles into edge computing hubs for precision mapping and reality capture. Outcome: ran the acquisition end to end, aligning Horus with a strategic acquirer.
+- Horus — Strategic Acquisition · M&A Advisory · Mobility & Mapping. Adaptive mapping that turns vehicles into edge computing hubs for precision mapping and reality capture. Outcome: ran the acquisition end to end, with Horus acquired by Systematic Growth, a private equity firm (systematic-growth.com).
 - MOOS — Seed / Acquisition · Fundraising · AI & Sensor Tech. AI-powered shelf sensors giving real-time inventory visibility across retail and healthcare. Outcome: supported their fundraising round.
 - Incus 3D — Series B · Fundraising · Additive Manufacturing. Industrial metal additive manufacturing via Lithography-based Metal Manufacturing (LMM). Outcome: built financial model and investor materials and ran the process; expansion into US and India.
 - SPARK — Series B · Fundraising · Battery Technology. Solar-powered smart battery systems for off-grid communities. Outcome: supported the raise, connecting them with impact/sustainability investors.

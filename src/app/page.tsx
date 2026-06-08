@@ -31,7 +31,7 @@ const deals = [
     website: 'https://horus.nu',
     description: 'Horus bridges worlds with adaptive mapping solutions, transforming vehicles into powerful computing hubs that process complex sensor data on-edge. Their modular technology enables seamless integration into existing operations for precision mapping and reality capture.',
     challenge: 'Horus had built industry-leading mapping technology and needed strategic advisory to navigate the acquisition process and find the right buyer to accelerate their growth.',
-    outcome: 'Facilitated the acquisition process from end to end, aligning Horus with a strategic acquirer positioned to scale their mapping technology internationally.',
+    outcome: 'Ran the acquisition process from end to end, culminating in Horus being acquired by Systematic Growth, a private equity firm positioned to scale their mapping technology internationally.',
   },
   {
     title: 'MOOS',
