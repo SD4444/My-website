@@ -687,7 +687,11 @@ export default function Home() {
             </div>
           </div>
           {projTab === 'Fractional' && (
-            <p className="tab-intro">Not a strategy deck that dies in a drawer. I come in as CFO or COO, define where the company is and where it&apos;s going, set the KPIs that prove it, and build the system that executes and tracks it.</p>
+            <div className="tab-intro">
+              <p>Think of me as something between a CFO and COO.</p>
+              <p>I help founders turn strategy into execution by defining the priorities, KPIs, operating rhythm, and financial logic needed to move the company forward. Then I help build and implement the tooling, infrastructure, and processes required to actually run it.</p>
+              <p>Not another strategy deck. Practical operating discipline, financial clarity, and hands-on execution for the next stage of growth.</p>
+            </div>
           )}
           <div className="proj-grid">
             {deals.map((deal, i) => ({ deal, i })).filter(({ deal }) => matchTab(deal)).map(({ deal, i }) => (

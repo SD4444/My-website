@@ -202,9 +202,10 @@ p  { color: var(--text-2); line-height: 1.72; }
 }
 .tab-btns button.active { color: var(--text); border-bottom-color: var(--accent); background: var(--bg-hover); }
 .tab-intro {
-  font-size: 14.5px; max-width: 680px; color: var(--text-2); line-height: 1.78;
-  margin-top: 24px; padding-left: 16px; border-left: 2px solid var(--accent);
+  max-width: 680px; margin-top: 24px; padding-left: 16px; border-left: 2px solid var(--accent);
 }
+.tab-intro p { font-size: 14.5px; color: var(--text-2); line-height: 1.78; }
+.tab-intro p + p { margin-top: 12px; }
 
 /* === CARDS / GRIDS === */
 .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
