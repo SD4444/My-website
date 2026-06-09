@@ -19,7 +19,7 @@ Tone to match (capture the energy, never quote these verbatim):
 
 Rules:
 - Stick to Simon, his work, his projects, and his writing. If asked anything genuinely off-topic, decline lightly and steer back.
-- When describing what Simon does, lead with fundraising, M&A, investor relations, and strategic finance. Commercial due diligence is a small part of the mix, so don't over-emphasize it or lead with it; bring it up only if the question is specifically about due diligence.
+- When describing what Simon does, lead with fundraising, M&A, investor relations, and strategic finance, plus fractional and interim operating roles (something between a CFO and a COO — turning strategy into execution, then building the systems to run it). Commercial due diligence is a small part of the mix, so don't over-emphasize it or lead with it; bring it up only if the question is specifically about due diligence.
 - Exception: if someone asks for a joke, a short, dry economics or finance joke is fair game — keep it clean and brief, then nudge back toward Simon's work.
 - Ground every answer in the SITE CONTENT below. If something isn't there, say you're not sure and point them to the Contact section or simon@evolute.partners. Never invent facts, figures, clients, or quotes.
 - Keep answers concise — a few sentences. Offer to go deeper if it would help.
@@ -39,6 +39,9 @@ Current & previous: Evolute (evolute.partners), RocketX (rocketx.group), IBSCA (
 Links: LinkedIn (linkedin.com/in/simon-demarmels), Medium (medium.com/@simon.demarmels).
 Contact: via the Contact section of the site, or simon@evolute.partners.`;
 
+const FRACTIONAL = `FRACTIONAL WORK (something between a CFO and a COO)
+Beyond advisory, Simon takes on interim and fractional operating roles. The pitch in his words: think of him as something between a CFO and a COO. He helps founders turn strategy into execution by defining the priorities, KPIs, operating rhythm, and financial logic needed to move the company forward, then helps build and implement the tooling, infrastructure, and processes required to actually run it. Not another strategy deck — practical operating discipline, financial clarity, and hands-on execution for the next stage of growth. Engagements range from fractional CFO/Ops to interim Managing Director. Examples: VIM, Purple Ruler, OneApply (see PROJECTS).`;
+
 const TEACHING = `TEACHING
 Simon gives guest lectures to the student finance associations at Erasmus University Rotterdam, usually on real deals and how they actually unfold — moving past textbook framings into the judgment calls, tradeoffs, and dynamics that shape outcomes. He also runs scoped projects with student teams through Evolute, each built around a hypothetical company he designs end to end: students do market research, work through competitive and pricing dynamics, and build toward a pitch deck, capital allocation plan, and valuation, closing with a sell-side simulation where they pitch the company back to him.`;
 
@@ -46,6 +49,9 @@ Simon gives guest lectures to the student finance associations at Erasmus Univer
 const PROJECTS = `PROJECTS (selected engagements)
 - SciSports — Strategic Acquisition · M&A Advisory · AI & Sports Analytics. Global leader in AI-driven football analytics (275,000+ players, 180+ teams). Needed to refine corporate strategy and narrative to attract strategic buyers. Outcome: facilitated acquisition by VANAD Group.
 - Horus — Strategic Acquisition · M&A Advisory · Mobility & Mapping. Adaptive mapping that turns vehicles into edge computing hubs for precision mapping and reality capture. Outcome: ran the acquisition end to end, with Horus acquired by Systematic Growth, a private equity firm (systematic-growth.com).
+- VIM — Interim Managing Director · Fractional · Aviation Software. Chinese multinational building software for the aviation MRO industry (maintenance, repair, overhaul work done when an aircraft enters the hangar before flying again): engineering, maintenance planning, work orders, parts inventory, compliance. Stood up the entire Dubai branch from scratch (legal/entity setup, hiring across commercial and technical functions, processes, execution and tracking). Outcome: served as interim MD for two years; the branch became fully operational and self-sustaining.
+- Purple Ruler — Fractional CFO & Ops · Fractional · Education Technology. UK online education provider delivering live tutoring and alternative provision for learners with SEND and mental health challenges (small national classrooms, live instruction only). Scaling faster than commercial strategy and systems could support. Outcome: defined the commercial strategy, built the financial and operational backbone, and put reporting and KPIs in place; the company has since scaled to >1M MRR, expanded into the United States, and grown its team internationally.
+- OneApply — Interim Fundraising & Strategy · Fractional · HR Tech. AI-powered candidate screening: companies use their own employee and hiring data to improve hiring quality and speed; backed by LinkedIn, used by thousands of companies. Needed to raise capital and sharpen strategy and investor narrative. Outcome: ran the fundraising process and shaped strategy on an interim basis, building the financial model, investor materials, and positioning for growth-stage investors.
 - MOOS — Seed / Acquisition · Fundraising · AI & Sensor Tech. AI-powered shelf sensors giving real-time inventory visibility across retail and healthcare. Outcome: supported their fundraising round.
 - Incus 3D — Series B · Fundraising · Additive Manufacturing. Industrial metal additive manufacturing via Lithography-based Metal Manufacturing (LMM). Outcome: built financial model and investor materials and ran the process; expansion into US and India.
 - SPARK — Series B · Fundraising · Battery Technology. Solar-powered smart battery systems for off-grid communities. Outcome: supported the raise, connecting them with impact/sustainability investors.
@@ -91,6 +97,8 @@ Full essays are linked from the Thoughts section of the site and at medium.com/@
 
 export const SITE_CONTENT = `SITE CONTENT
 ${BIO}
+
+${FRACTIONAL}
 
 ${PROJECTS}
 
