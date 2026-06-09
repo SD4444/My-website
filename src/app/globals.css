@@ -201,6 +201,10 @@ p  { color: var(--text-2); line-height: 1.72; }
   transition: color .12s, background .12s, border-color .12s;
 }
 .tab-btns button.active { color: var(--text); border-bottom-color: var(--accent); background: var(--bg-hover); }
+.tab-intro {
+  font-size: 14.5px; max-width: 680px; color: var(--text-2); line-height: 1.78;
+  margin-top: 24px; padding-left: 16px; border-left: 2px solid var(--accent);
+}
 
 /* === CARDS / GRIDS === */
 .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }

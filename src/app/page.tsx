@@ -34,6 +34,36 @@ const deals = [
     outcome: 'Ran the acquisition process from end to end, culminating in Horus being acquired by Systematic Growth, a private equity firm positioned to scale their mapping technology internationally.',
   },
   {
+    title: 'VIM',
+    tagline: 'Interim Managing Director',
+    sector: 'Aviation Software',
+    type: 'Fractional',
+    website: '',
+    description: 'VIM is a Chinese multinational that builds software for the aviation MRO industry, the maintenance, repair, and overhaul work that happens once an aircraft lands and enters the hangar before it can fly again. Its platform digitises engineering, maintenance planning, work orders, parts inventory, and regulatory compliance, helping airlines and MRO providers cut aircraft downtime and turn planes around faster and safer.',
+    challenge: 'VIM wanted a foothold in the Middle East but had no operation on the ground. The mandate was to stand up an entire branch in Dubai from scratch: legal and entity setup, hiring across commercial and technical functions, building the delivery and commercial processes, and the systems to execute and track it all.',
+    outcome: 'Served as interim Managing Director for two years, building the Dubai team from the ground up, hiring across functions, and putting the processes, execution rhythm, and performance tracking in place. The branch became fully operational and self-sustaining.',
+  },
+  {
+    title: 'Purple Ruler',
+    tagline: 'Fractional CFO & Ops',
+    sector: 'Education Technology',
+    type: 'Fractional',
+    website: 'https://www.purpleruler.com/',
+    description: 'Purple Ruler is a UK online education provider delivering live tutoring and alternative provision for learners with special educational needs and mental health challenges. Pupils join small national classrooms of up to six, taught live by specialist teachers, blending the English National Curriculum with inquiry-based, IB-inspired methods. Every lesson is live instruction, with no AI or recordings.',
+    challenge: 'Purple Ruler had strong demand and a mission-driven product, but was scaling faster than its commercial strategy and internal systems could support. They needed a clear commercial model, defined KPIs, and the operational infrastructure to grow without breaking.',
+    outcome: 'Stepped in as fractional CFO and operations lead to define the commercial strategy, build the financial and operational backbone, and put reporting and performance tracking in place. The company has since scaled to >1M MRR, expanded its commercial footprint into the United States, and expanded its team internationally.',
+  },
+  {
+    title: 'OneApply',
+    tagline: 'Interim Fundraising & Strategy',
+    sector: 'HR Tech',
+    type: 'Fractional',
+    website: '',
+    description: 'OneApply builds AI-powered candidate screening. Its platform lets companies use their own employee and hiring data to improve the quality and speed of recruitment, surfacing stronger candidates and sharpening hiring decisions. Backed by LinkedIn, it is used by thousands of companies.',
+    challenge: 'OneApply needed to raise capital to scale the platform, and to sharpen its strategy and investor narrative before going to market.',
+    outcome: 'Came in on an interim basis to run the fundraising process and shape the company strategy, building the financial model, investor materials, and positioning to take the platform to growth-stage investors.',
+  },
+  {
     title: 'MOOS',
     tagline: 'Seed / Acquisition',
     sector: 'AI & Sensor Tech',
@@ -494,7 +524,7 @@ function Overlay({ onClose, onPrev, onNext, scrollable, children }: {
 export default function Home() {
   const [selectedDeal, setSelectedDeal] = useState<number | null>(null);
   const [selectedThought, setSelectedThought] = useState<number | null>(null);
-  const [projTab, setProjTab] = useState<'All' | 'Fundraising' | 'M&A' | 'Due Diligence'>('All');
+  const [projTab, setProjTab] = useState<'All' | 'Fundraising' | 'M&A' | 'Fractional' | 'Due Diligence'>('All');
   const [navOpen, setNavOpen] = useState(false);
   const [active, setActive] = useState('about');
   const [progress, setProgress] = useState(4);
@@ -530,11 +560,12 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const projTabs: Array<'All' | 'Fundraising' | 'M&A' | 'Due Diligence'> = ['All', 'Fundraising', 'M&A', 'Due Diligence'];
+  const projTabs: Array<'All' | 'Fundraising' | 'M&A' | 'Fractional' | 'Due Diligence'> = ['All', 'Fundraising', 'M&A', 'Fractional', 'Due Diligence'];
   const matchTab = (d: typeof deals[number]) =>
     projTab === 'All' ? true
       : projTab === 'Fundraising' ? d.type === 'Fundraising'
       : projTab === 'M&A' ? d.type === 'M&A Advisory'
+      : projTab === 'Fractional' ? d.type === 'Fractional'
       : d.type.includes('Due Diligence');
 
   const marqueeLogos = (projectLogos as Array<{ title: string; logo?: string; domain: string }>).filter(c => c.logo);
@@ -655,6 +686,9 @@ export default function Home() {
               ))}
             </div>
           </div>
+          {projTab === 'Fractional' && (
+            <p className="tab-intro">Not a strategy deck that dies in a drawer. I come in as CFO or COO, define where the company is and where it&apos;s going, set the KPIs that prove it, and build the system that executes and tracks it.</p>
+          )}
           <div className="proj-grid">
             {deals.map((deal, i) => ({ deal, i })).filter(({ deal }) => matchTab(deal)).map(({ deal, i }) => (
               <div key={i} className="card clickable" onClick={() => setSelectedDeal(i)}>
