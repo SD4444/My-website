@@ -281,12 +281,12 @@ textarea { min-height: 120px; resize: vertical; }
 .overlay-close:hover { background: var(--bg-panel-hi); color: var(--text); }
 .ov-title { font-size: 28px; margin-bottom: 8px; }
 .ov-tagline { font-size: 14px; color: var(--accent); margin-bottom: 20px; }
-.ov-link { display: inline-block; font-size: 13px; color: var(--text-2); border-bottom: 1px solid var(--border-md); margin-bottom: 28px; }
+.ov-links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-bottom: 28px; }
+.ov-link { display: inline-block; font-size: 13px; color: var(--text-2); border-bottom: 1px solid var(--border-md); }
 .ov-link:hover { color: var(--text); border-bottom-color: var(--accent); }
-.ov-announce { display: flex; width: fit-content; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 11px; letter-spacing: .04em; color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); padding: 6px 12px; margin-bottom: 28px; transition: background .2s, border-color .2s; }
-.ov-announce:hover { background: color-mix(in srgb, var(--accent) 16%, transparent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
-.ov-announce-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: ov-announce-pulse 2.4s ease-out infinite; }
-@keyframes ov-announce-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 70% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 0%, transparent); } 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); } }
+.ov-news { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--accent); border-bottom: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); }
+.ov-news:hover { border-bottom-color: var(--accent); }
+.ov-news-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
 .ov-section { margin-bottom: 24px; }
 .ov-h4 { font-family: var(--font-head); font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
 .ov-text { font-size: 14.5px; line-height: 1.75; color: var(--text-2); }

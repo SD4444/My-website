@@ -844,21 +844,26 @@ export default function Home() {
           </div>
           <h2 className="ov-title">{deals[selectedDeal].title}</h2>
           <p className="ov-tagline">{deals[selectedDeal].tagline}</p>
-          {deals[selectedDeal].website && (
-            <a className="ov-link" href={deals[selectedDeal].website} target="_blank" rel="noopener">
-              {deals[selectedDeal].website!.replace('https://', '')} ↗
-            </a>
-          )}
-          {(deals[selectedDeal] as { announcement?: { label: string; url: string } }).announcement && (
-            <a
-              className="ov-announce"
-              href={(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.url}
-              target="_blank"
-              rel="noopener"
-            >
-              <span className="ov-announce-dot" />
-              {(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.label} ↗
-            </a>
+          {(deals[selectedDeal].website ||
+            (deals[selectedDeal] as { announcement?: { label: string; url: string } }).announcement) && (
+            <div className="ov-links">
+              {deals[selectedDeal].website && (
+                <a className="ov-link" href={deals[selectedDeal].website} target="_blank" rel="noopener">
+                  {deals[selectedDeal].website!.replace('https://', '')} ↗
+                </a>
+              )}
+              {(deals[selectedDeal] as { announcement?: { label: string; url: string } }).announcement && (
+                <a
+                  className="ov-news"
+                  href={(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="ov-news-dot" />
+                  {(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.label} ↗
+                </a>
+              )}
+            </div>
           )}
           {[
             { label: 'About', text: deals[selectedDeal].description },
