@@ -22,6 +22,7 @@ const deals = [
     description: 'SciSports is a global leader in AI-driven football analytics, delivering real-time, actionable insights into player and team performance. Their solution empowers clubs, federations, agents, and analysts to make data-driven decisions. With a database of over 275,000 players and 180+ teams globally.',
     challenge: 'SciSports had built an impressive product and client base in Europe, but needed to refine its corporate strategy and company narrative to attract strategic buyers and maximize valuation.',
     outcome: 'Facilitated their successful acquisition by VANAD Group, positioning SciSports for accelerated international growth.',
+    announcement: { label: 'VANAD Group acquires SciSports', url: 'https://www.scisports.com/vanad-group-acquires-scisports/' },
   },
   {
     title: 'Horus',
@@ -32,6 +33,7 @@ const deals = [
     description: 'Horus bridges worlds with adaptive mapping solutions, transforming vehicles into powerful computing hubs that process complex sensor data on-edge. Their modular technology enables seamless integration into existing operations for precision mapping and reality capture.',
     challenge: 'Horus had built industry-leading mapping technology and needed strategic advisory to navigate the acquisition process and find the right buyer to accelerate their growth.',
     outcome: 'Ran the acquisition process from end to end, culminating in Horus being acquired by Systematic Growth, a private equity firm positioned to scale their mapping technology internationally.',
+    announcement: { label: 'Horus joins Nilario', url: 'https://nilario.com/news/horus-joins-nilario' },
   },
   {
     title: 'VIM',
@@ -845,6 +847,17 @@ export default function Home() {
           {deals[selectedDeal].website && (
             <a className="ov-link" href={deals[selectedDeal].website} target="_blank" rel="noopener">
               {deals[selectedDeal].website!.replace('https://', '')} ↗
+            </a>
+          )}
+          {(deals[selectedDeal] as { announcement?: { label: string; url: string } }).announcement && (
+            <a
+              className="ov-announce"
+              href={(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.url}
+              target="_blank"
+              rel="noopener"
+            >
+              <span className="ov-announce-dot" />
+              {(deals[selectedDeal] as { announcement: { label: string; url: string } }).announcement.label} ↗
             </a>
           )}
           {[
