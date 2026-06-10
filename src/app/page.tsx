@@ -41,7 +41,7 @@ const deals = [
     sector: 'Aviation Software',
     type: 'Fractional',
     website: '',
-    description: 'VIM is a Chinese multinational that builds software for the aviation MRO industry, the maintenance, repair, and overhaul work that happens once an aircraft lands and enters the hangar before it can fly again. Its platform digitises engineering, maintenance planning, work orders, parts inventory, and regulatory compliance, helping airlines and MRO providers cut aircraft downtime and turn planes around faster and safer.',
+    description: 'VIM is a Chinese-British multinational that builds software for the aviation MRO industry, the maintenance, repair, and overhaul work that happens once an aircraft lands and enters the hangar before it can fly again. Its platform digitises engineering, maintenance planning, work orders, parts inventory, and regulatory compliance, helping airlines and MRO providers cut aircraft downtime and turn planes around faster and safer.',
     challenge: 'VIM wanted a foothold in the Middle East but had no operation on the ground. The mandate was to stand up an entire branch in Dubai from scratch: legal and entity setup, hiring across commercial and technical functions, building the delivery and commercial processes, and the systems to execute and track it all.',
     outcome: 'Served as interim Managing Director for two years, building the Dubai team from the ground up, hiring across functions, and putting the processes, execution rhythm, and performance tracking in place. The branch became fully operational and self-sustaining.',
   },
