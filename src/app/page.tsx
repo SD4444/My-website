@@ -590,6 +590,10 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <button className="topbar-ask" onClick={() => setAskOpen(true)}>
+          <span className="sidebar-ask-dot" />
+          Ask
+        </button>
         <button className="nav-toggle" aria-label="Toggle navigation" onClick={() => setNavOpen(o => !o)}>
           <span className="nav-toggle-bar" />
         </button>
