@@ -739,15 +739,29 @@ export default function Home() {
         {/* 03 — TEACHING */}
         <section className="section" id="teaching">
           <div className="kicker">03 · Teaching</div>
-          <h2>Guest lectures &amp; student projects.</h2>
+          <h2>Workshops, lectures &amp; student projects.</h2>
           <p className="lead">
-            I give guest lectures to the various student finance associations at Erasmus University Rotterdam, typically on real deals and how they actually unfold. The aim is to move past textbook framings and into the judgment calls, tradeoffs, and dynamics that shape outcomes in practice.
+            Workshops for companies and accelerators, guest lectures at Erasmus University Rotterdam, and scoped projects with student teams. All focused on how fundraising and finance work in practice rather than in theory.
           </p>
-          <p>
-            Alongside the lectures, I run scoped projects with student teams through Evolute. Each project is built around a hypothetical company I design end-to-end, pushing students to conduct rigorous market research, work through competitive and pricing dynamics, and build toward a pitch deck, capital allocation plan, and valuation. The arc closes with a sell-side simulation, where the team pitches the company back to me.
-          </p>
+          <div className="proj-grid">
+            <div className="card">
+              <div className="card-name">Industry Workshops</div>
+              <div className="card-role">Accelerators &amp; scaleups</div>
+              <p className="card-desc">Startup and scaleup accelerators, and companies more broadly, bring me in to run focused sessions on specific topics: fundraising, capital and shareholder strategy, financial discipline, and what it takes to get a deal to close.</p>
+            </div>
+            <div className="card">
+              <div className="card-name">Guest Lectures</div>
+              <div className="card-role">Erasmus University Rotterdam</div>
+              <p className="card-desc">I lecture for the various student finance associations at Erasmus University Rotterdam on how this work actually unfolds: the financial and capital strategy, the shareholder dynamics, and the judgment calls that carry a deal through to close.</p>
+            </div>
+            <div className="card">
+              <div className="card-name">Student Projects</div>
+              <div className="card-role">Hands-on simulations</div>
+              <p className="card-desc">Scoped projects with student teams, each built around a hypothetical company I design end-to-end: rigorous market research, competitive and pricing dynamics, a pitch deck, capital allocation plan, and valuation, closing with a sell-side simulation where the team pitches the company back to me.</p>
+            </div>
+          </div>
           <div className="tag-row">
-            {['Guest Lectures', 'Student Projects', 'Market Research', 'Financial Modeling', 'Valuation', 'Sell-Side Simulation'].map(tag => (
+            {['Industry Workshops', 'Guest Lectures', 'Student Projects', 'Fundraising', 'Market Research', 'Financial Modeling', 'Valuation', 'Sell-Side Simulation'].map(tag => (
               <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
