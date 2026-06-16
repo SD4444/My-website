@@ -35,6 +35,8 @@ Quick facts: 60+ engagements across fundraising, M&A, investor relations, and st
 
 Self-description: "Builder, tech enthusiast, capital-markets romantic." He has effectively no formal coding background but builds working tools with AI.
 
+Personal: before his finance career, Simon played professional ice hockey for ECH Basel in Switzerland.
+
 Current & previous: Evolute (evolute.partners), RocketX (rocketx.group), IBSCA (ibsca.nl).
 Links: LinkedIn (linkedin.com/in/simon-demarmels), Medium (medium.com/@simon.demarmels).
 Contact: via the Contact section of the site, or simon@evolute.partners.`;
