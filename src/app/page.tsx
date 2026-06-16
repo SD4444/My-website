@@ -652,7 +652,7 @@ export default function Home() {
           </div>
 
           <div className="tag-row">
-            {['Strategy & Operations', 'GTM Strategy', 'Cross-functional Execution', 'Strategic Finance', 'M&A', 'Fundraising', 'Corporate Strategy', 'Capital Strategy', 'Management Advisory', 'Shareholder Alignment', 'Business Model Design', 'KPI Design', 'Scaling Operations'].map(tag => (
+            {['Venture Capital', 'M&A', 'Fundraising', 'Capital Strategy', 'Management Advisory', 'Strategy & Operations', 'GTM Strategy', 'Cross-functional Execution', 'Strategic Finance', 'Corporate Strategy', 'Shareholder Alignment', 'Business Model Design', 'KPI Design', 'Scaling Operations'].map(tag => (
               <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
