@@ -13,9 +13,23 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
   const [busy, setBusy] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const prevLen = useRef(0);
 
+  // Scroll only when a new turn starts, not on every streamed token. We pin the
+  // freshly asked question near the top so the answer can stream in below it
+  // without yanking the start of the reply out of view.
   useEffect(() => {
-    if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
+    const log = logRef.current;
+    if (!log) return;
+    if (messages.length > prevLen.current) {
+      if (anchorRef.current) {
+        log.scrollTop += anchorRef.current.getBoundingClientRect().top - log.getBoundingClientRect().top - 12;
+      } else {
+        log.scrollTop = log.scrollHeight;
+      }
+    }
+    prevLen.current = messages.length;
   }, [messages, open]);
 
   useEffect(() => {
@@ -94,11 +108,18 @@ export default function AskBot({ open, onClose }: { open: boolean; onClose: () =
             ))}
           </div>
         )}
-        {messages.map((m, i) => (
-          <div key={i} className={`askbot-msg ${m.role === 'user' ? 'user' : 'bot'}`}>
-            {m.content || (m.role === 'assistant' && busy ? <span className="askbot-typing">…</span> : '')}
-          </div>
-        ))}
+        {messages.map((m, i) => {
+          const lastUserIdx = messages.map((x) => x.role).lastIndexOf('user');
+          return (
+            <div
+              key={i}
+              ref={i === lastUserIdx ? anchorRef : undefined}
+              className={`askbot-msg ${m.role === 'user' ? 'user' : 'bot'}`}
+            >
+              {m.content || (m.role === 'assistant' && busy ? <span className="askbot-typing">…</span> : '')}
+            </div>
+          );
+        })}
       </div>
 
       <form
